@@ -1,0 +1,17 @@
+Package: striprtf
+Type: Package
+Title: Extract Text from RTF (Rich Text Format) File
+Version: 0.1.0
+Authors@R: c(
+  person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
+  )
+Maintainer: Kota Mori <kmori05@gmail.com>
+Description:
+  Extracts plain text from RTF (Rich Text Format) file.
+License: MIT + file LICENSE
+LazyData: TRUE
+Imports:
+    stringr
+Suggests:
+    testthat
+RoxygenNote: 5.0.1
