@@ -1,15 +1,16 @@
 #' Extract Text from RTF (Rich Text Format) File
 #' @param file  Path to an RTF file. Must be character of length 1.
+#' @param quiet Logical. If TRUE, progress report is shown.
 #' @return character of extracted text
 #' @export
-striprtf <- function(file)
+striprtf <- function(file, quiet = FALSE)
 {
   stopifnot(is.character(file))
   stopifnot(length(file) == 1L)
 
   scan(file, what = "character", sep = "\n", quiet = TRUE) %>%
     paste0(collapse = "\n") %>%
-    rtf2text()
+    rtf2text(quiet)
 }
 
 
@@ -17,9 +18,8 @@ striprtf <- function(file)
 #' @rdname striprtf
 #' @param text  Character of length 1.  Expected to be contents of an RTF file.
 #' @references https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
-rtf2text <- function(text)
+rtf2text <- function(text, quiet = FALSE)
 {
-
 
   pattern <- regex("\\\\([a-z]{1,32})(-?\\d{1,10})?[ ]?|\\\\'([0-9a-f]{2})|\\\\([^a-z])|([{}])|[\r\n]+|(.)",
                    ignore_case = TRUE)
@@ -118,15 +118,22 @@ rtf2text <- function(text)
     'rdblquote' = '\u201D'
   )
 
-  stack = list()
-  ignorable = FALSE       # Whether this group (and all inside it) are "ignorable".
-  ucskip = 1L             # Number of ASCII characters to skip after a unicode character.
-  curskip = 0L            # Number of ASCII characters left to skip
-  out = character(0)      # Output buffer.
 
   match_list <- str_match_all(text, pattern)[[1]]
+  if (nrow(match_list) == 0) return(out)
+
+  stack = list()
+  ignorable = FALSE   # Whether this group (and all inside it) are "ignorable".
+  ucskip = 1L         # Number of ASCII characters to skip after a unicode character.
+  curskip = 0L        # Number of ASCII characters left to skip
+  out = character(0)  # Output buffer.
   for (i in 1:nrow(match_list))
   {
+    cat(sprintf('\r[%-20s%3.0f%%]',
+                paste(rep('=', i/nrow(match_list)*20), collapse=''),
+                i/nrow(match_list)*100))
+    flush.console()
+
     m <- match_list[i,]
     word  <- m[2]
     arg   <- m[3]

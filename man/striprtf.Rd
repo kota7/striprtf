@@ -5,12 +5,14 @@
 \alias{striprtf}
 \title{Extract Text from RTF (Rich Text Format) File}
 \usage{
-striprtf(file)
+striprtf(file, quiet = FALSE)
 
-rtf2text(text)
+rtf2text(text, quiet = FALSE)
 }
 \arguments{
 \item{file}{Path to an RTF file. Must be character of length 1.}
+
+\item{quiet}{Logical. If TRUE, progress report is shown.}
 
 \item{text}{Character of length 1.  Expected to be contents of an RTF file.}
 }
