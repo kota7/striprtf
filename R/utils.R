@@ -1,3 +1,2 @@
-#' @importFrom stringr str_match_all regex %>% str_locate
+#' @importFrom magrittr %>%
 NULL
-

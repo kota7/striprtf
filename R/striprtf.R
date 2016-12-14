@@ -20,8 +20,15 @@ striprtf <- function(file, quiet = FALSE)
 #' @references https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 rtf2text <- function(text, quiet = FALSE)
 {
+  # obtain code page
+  cp <- stringr::str_match(text, "\\\\ansicpg([0-9]+)")[,2]
+  if (is.na(cp)) {
+    cpname <- NA_character_
+  } else {
+    cpname <- paste("CP", cp, sep = "")
+  }
 
-  pattern <- regex("\\\\([a-z]{1,32})(-?\\d{1,10})?[ ]?|\\\\'([0-9a-f]{2})|\\\\([^a-z])|([{}])|[\r\n]+|(.)",
+  pattern <- stringr::regex("\\\\([a-z]{1,32})(-?\\d{1,10})?[ ]?|\\\\'([0-9a-f]{2})|\\\\([^a-z])|([{}])|[\r\n]+|(.)",
                    ignore_case = TRUE)
   destinations <- c(
     'aftncn', 'aftnsep', 'aftnsepc', 'annotation',
@@ -119,20 +126,24 @@ rtf2text <- function(text, quiet = FALSE)
   )
 
 
-  match_list <- str_match_all(text, pattern)[[1]]
-  if (nrow(match_list) == 0) return(out)
 
   stack = list()
   ignorable = FALSE   # Whether this group (and all inside it) are "ignorable".
   ucskip = 1L         # Number of ASCII characters to skip after a unicode character.
   curskip = 0L        # Number of ASCII characters left to skip
   out = character(0)  # Output buffer.
+
+  match_list <- stringr::str_match_all(text, pattern)[[1]]
+  if (nrow(match_list) == 0) return(out)
+
   for (i in 1:nrow(match_list))
   {
-    cat(sprintf('\r[%-20s%3.0f%%]',
-                paste(rep('=', i/nrow(match_list)*20), collapse=''),
-                i/nrow(match_list)*100))
-    flush.console()
+    if (!quiet) {
+      cat(sprintf('\r[%-20s%3.0f%%]',
+                  paste(rep('=', i/nrow(match_list)*20), collapse=''),
+                  i/nrow(match_list)*100))
+      flush.console()
+    }
 
     m <- match_list[i,]
     word  <- m[2]
@@ -175,6 +186,7 @@ rtf2text <- function(text, quiet = FALSE)
         ucskip <- as.integer(arg)
       } else if (word == "u") {
         n <- as.integer(arg)
+        cat("u", n, "\n")
         if (n < 0) n <- n + 0x10000
         if (n > 127) {
           out <- c(out, intToUtf8(n))
@@ -188,6 +200,7 @@ rtf2text <- function(text, quiet = FALSE)
         curskip <- curskip - 1
       } else if (!ignorable) {
         n <- as.hexmode(hex) %>% as.integer()
+        cat("hex", n, "or", sprintf("%x", n), "\n")
         if (n > 127) {
           out <- c(out, intToUtf8(n))
         } else {
@@ -198,13 +211,16 @@ rtf2text <- function(text, quiet = FALSE)
       if (curskip > 0) {
         curskip <- cursip - 1
       } else if (!ignorable) {
+        cat("tchar", tchar, "\n")
         out <- c(out, tchar)
       }
     }
   }
+  if (!quiet) cat("\n")
+  out <- paste0(out, collapse = "")
 
-  paste0(out, collapse = "") %>%
-    strsplit("\n") %>%
-    unlist()
+
+  # return
+  strsplit(out, "\n") %>% unlist()
 
 }
