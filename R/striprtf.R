@@ -178,7 +178,7 @@ rtf2text <- function(text)
       }
     } else if (hex != "") {
       if (curskip > 0) {
-        curskip <- cursip - 1
+        curskip <- curskip - 1
       } else if (!ignorable) {
         n <- as.hexmode(hex) %>% as.integer()
         if (n > 127) {
@@ -196,6 +196,8 @@ rtf2text <- function(text)
     }
   }
 
-  paste0(out, collapse = "")
+  paste0(out, collapse = "") %>%
+    strsplit("\n") %>%
+    unlist()
 
 }
