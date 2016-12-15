@@ -270,8 +270,10 @@ rtf2text_C <- function(text, verbose = FALSE)
   match_mat <- stringr::str_match_all(text, pattern)[[1]]
   if (nrow(match_mat) == 0) return(character(0))
 
+  # use c++ helper function to parse
   parsed <- strip_helper(match_mat)
   #print(parsed)
+
   out <- strsplit(parsed$strcode, "x") %>%
     lapply(as.hexmode) %>%
     lapply(intToUtf8)

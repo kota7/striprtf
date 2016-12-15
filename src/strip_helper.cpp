@@ -3,6 +3,7 @@
 #include <set>
 #include <vector>
 #include <stack>
+#include <stdio.h>
 
 #include "dict.h"
 #include "dechex.h"
@@ -441,6 +442,7 @@ List strip_helper(CharacterMatrix match_mat) {
   if (match_mat.ncol() < 7) stop("match_mat must have 7 columns");
   for (long long i = 0; i < N; i++)
   {
+
     std::string word  = as<std::string>(match_mat(i,1));
     std::string arg   = as<std::string>(match_mat(i,2));
     std::string hex   = as<std::string>(match_mat(i,3));
@@ -518,7 +520,6 @@ List strip_helper(CharacterMatrix match_mat) {
       }
     }
   }
-
 
 
   // compile output
