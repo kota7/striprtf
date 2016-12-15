@@ -29,4 +29,10 @@ Extract Text from RTF (Rich Text Format) File
 \examples{
 striprtf(system.file("extdata/king.rtf", package = "striprtf"))
 }
+\references{
+\itemize{
+ \item{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}
+ \item{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}
+}
+}
 

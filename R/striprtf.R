@@ -7,6 +7,11 @@
 #' @return Character vector of extracted text
 #' @export
 #' @examples striprtf(system.file("extdata/king.rtf", package = "striprtf"))
+#' @references
+#' \itemize{
+#'  \item{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}
+#'  \item{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}
+#' }
 striprtf <- function(file, verbose = FALSE, ...)
 {
   stopifnot(is.character(file))
@@ -255,11 +260,17 @@ striprtf <- function(file, verbose = FALSE, ...)
 
 
 
-
-rtf2text_C <- function(text, verbose = FALSE)
+#' @rdname striprtf
+#' @param text  Character of length 1.  Expected to be contents of an RTF file.
+rtf2text <- function(text, verbose = FALSE)
 {
   stopifnot(is.character(text))
   stopifnot(is.logical(verbose))
+  stopifnot(length(verbose) > 0)
+  if (length(verbose) > 1) {
+    verbose <- verbose[1]
+    warning("only first element of verbose is used")
+  }
 
   # if text has more than 1 length, collapse
   if (length(text) > 1) text <- paste0(text, collapse = "character")
@@ -310,7 +321,4 @@ rtf2text_C <- function(text, verbose = FALSE)
 
 
 
-#' @rdname striprtf
-#' @param text  Character of length 1.  Expected to be contents of an RTF file.
-rtf2text <- rtf2text_C
 
