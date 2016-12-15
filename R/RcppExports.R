@@ -5,7 +5,7 @@ to_hexstr <- function(x, pad = 4L) {
     .Call('striprtf_to_hexstr', PACKAGE = 'striprtf', x, pad)
 }
 
-strip_helper <- function(match_mat) {
-    .Call('striprtf_strip_helper', PACKAGE = 'striprtf', match_mat)
+strip_helper <- function(match_mat, dest_names, special_keys, special_hex) {
+    .Call('striprtf_strip_helper', PACKAGE = 'striprtf', match_mat, dest_names, special_keys, special_hex)
 }
 

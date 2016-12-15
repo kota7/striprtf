@@ -18,13 +18,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // strip_helper
-List strip_helper(CharacterMatrix match_mat);
-RcppExport SEXP striprtf_strip_helper(SEXP match_matSEXP) {
+List strip_helper(CharacterMatrix match_mat, CharacterVector dest_names, CharacterVector special_keys, CharacterVector special_hex);
+RcppExport SEXP striprtf_strip_helper(SEXP match_matSEXP, SEXP dest_namesSEXP, SEXP special_keysSEXP, SEXP special_hexSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< CharacterMatrix >::type match_mat(match_matSEXP);
-    rcpp_result_gen = Rcpp::wrap(strip_helper(match_mat));
+    Rcpp::traits::input_parameter< CharacterVector >::type dest_names(dest_namesSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type special_keys(special_keysSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type special_hex(special_hexSEXP);
+    rcpp_result_gen = Rcpp::wrap(strip_helper(match_mat, dest_names, special_keys, special_hex));
     return rcpp_result_gen;
 END_RCPP
 }

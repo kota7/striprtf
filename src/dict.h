@@ -1,3 +1,6 @@
+#ifndef DICTHEADERDEF
+#define DICTHEADERDEF
+
 #include <string>
 #include <Rcpp.h>
 
@@ -78,3 +81,6 @@ template <class T>
     return NULL;
   }
 };
+
+
+#endif

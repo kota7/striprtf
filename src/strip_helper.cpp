@@ -3,11 +3,10 @@
 #include <set>
 #include <vector>
 #include <stack>
-#include <stdio.h>
+#include <cstdio>
 
 #include "dict.h"
 #include "dechex.h"
-#include "UnicodeToUTF8.h"
 
 
 using namespace Rcpp;
@@ -53,321 +52,20 @@ struct Section
 
 void set_parameters(
     std::set<std::string> &destinations,
-    SimpleOrderedDict<std::string> &specialchars)
+    SimpleOrderedDict<std::string> &specialchars,
+    CharacterVector dest_names,
+    CharacterVector special_keys,
+    CharacterVector special_hex)
 {
   // destinations
-  destinations.insert("aftncn");
-  destinations.insert("aftnsep");
-  destinations.insert("aftnsepc");
-  destinations.insert("annotation");
-  destinations.insert("atnauthor");
-  destinations.insert("atndate");
-  destinations.insert("atnicn");
-  destinations.insert("atnid");
-  destinations.insert("atnparent");
-  destinations.insert("atnref");
-  destinations.insert("atntime");
-  destinations.insert("atrfend");
-  destinations.insert("atrfstart");
-  destinations.insert("author");
-  destinations.insert("background");
-  destinations.insert("bkmkend");
-  destinations.insert("bkmkstart");
-  destinations.insert("blipuid");
-  destinations.insert("buptim");
-  destinations.insert("category");
-  destinations.insert("colorschememapping");
-  destinations.insert("colortbl");
-  destinations.insert("comment");
-  destinations.insert("company");
-  destinations.insert("creatim");
-  destinations.insert("datafield");
-  destinations.insert("datastore");
-  destinations.insert("defchp");
-  destinations.insert("defpap");
-  destinations.insert("do");
-  destinations.insert("doccomm");
-  destinations.insert("docvar");
-  destinations.insert("dptxbxtext");
-  destinations.insert("ebcend");
-  destinations.insert("ebcstart");
-  destinations.insert("factoidname");
-  destinations.insert("falt");
-  destinations.insert("fchars");
-  destinations.insert("ffdeftext");
-  destinations.insert("ffentrymcr");
-  destinations.insert("ffexitmcr");
-  destinations.insert("ffformat");
-  destinations.insert("ffhelptext");
-  destinations.insert("ffl");
-  destinations.insert("ffname");
-  destinations.insert("ffstattext");
-  destinations.insert("field");
-  destinations.insert("file");
-  destinations.insert("filetbl");
-  destinations.insert("fldinst");
-  destinations.insert("fldrslt");
-  destinations.insert("fldtype");
-  destinations.insert("fname");
-  destinations.insert("fontemb");
-  destinations.insert("fontfile");
-  destinations.insert("fonttbl");
-  destinations.insert("footer");
-  destinations.insert("footerf");
-  destinations.insert("footerl");
-  destinations.insert("footerr");
-  destinations.insert("footnote");
-  destinations.insert("formfield");
-  destinations.insert("ftncn");
-  destinations.insert("ftnsep");
-  destinations.insert("ftnsepc");
-  destinations.insert("g");
-  destinations.insert("generator");
-  destinations.insert("gridtbl");
-  destinations.insert("header");
-  destinations.insert("headerf");
-  destinations.insert("headerl");
-  destinations.insert("headerr");
-  destinations.insert("hl");
-  destinations.insert("hlfr");
-  destinations.insert("hlinkbase");
-  destinations.insert("hlloc");
-  destinations.insert("hlsrc");
-  destinations.insert("hsv");
-  destinations.insert("htmltag");
-  destinations.insert("info");
-  destinations.insert("keycode");
-  destinations.insert("keywords");
-  destinations.insert("latentstyles");
-  destinations.insert("lchars");
-  destinations.insert("levelnumbers");
-  destinations.insert("leveltext");
-  destinations.insert("lfolevel");
-  destinations.insert("linkval");
-  destinations.insert("list");
-  destinations.insert("listlevel");
-  destinations.insert("listname");
-  destinations.insert("listoverride");
-  destinations.insert("listoverridetable");
-  destinations.insert("listpicture");
-  destinations.insert("liststylename");
-  destinations.insert("listtable");
-  destinations.insert("listtext");
-  destinations.insert("lsdlockedexcept");
-  destinations.insert("macc");
-  destinations.insert("maccPr");
-  destinations.insert("mailmerge");
-  destinations.insert("maln");
-  destinations.insert("malnScr");
-  destinations.insert("manager");
-  destinations.insert("margPr");
-  destinations.insert("mbar");
-  destinations.insert("mbarPr");
-  destinations.insert("mbaseJc");
-  destinations.insert("mbegChr");
-  destinations.insert("mborderBox");
-  destinations.insert("mborderBoxPr");
-  destinations.insert("mbox");
-  destinations.insert("mboxPr");
-  destinations.insert("mchr");
-  destinations.insert("mcount");
-  destinations.insert("mctrlPr");
-  destinations.insert("md");
-  destinations.insert("mdeg");
-  destinations.insert("mdegHide");
-  destinations.insert("mden");
-  destinations.insert("mdiff");
-  destinations.insert("mdPr");
-  destinations.insert("me");
-  destinations.insert("mendChr");
-  destinations.insert("meqArr");
-  destinations.insert("meqArrPr");
-  destinations.insert("mf");
-  destinations.insert("mfName");
-  destinations.insert("mfPr");
-  destinations.insert("mfunc");
-  destinations.insert("mfuncPr");
-  destinations.insert("mgroupChr");
-  destinations.insert("mgroupChrPr");
-  destinations.insert("mgrow");
-  destinations.insert("mhideBot");
-  destinations.insert("mhideLeft");
-  destinations.insert("mhideRight");
-  destinations.insert("mhideTop");
-  destinations.insert("mhtmltag");
-  destinations.insert("mlim");
-  destinations.insert("mlimloc");
-  destinations.insert("mlimlow");
-  destinations.insert("mlimlowPr");
-  destinations.insert("mlimupp");
-  destinations.insert("mlimuppPr");
-  destinations.insert("mm");
-  destinations.insert("mmaddfieldname");
-  destinations.insert("mmath");
-  destinations.insert("mmathPict");
-  destinations.insert("mmathPr");
-  destinations.insert("mmaxdist");
-  destinations.insert("mmc");
-  destinations.insert("mmcJc");
-  destinations.insert("mmconnectstr");
-  destinations.insert("mmconnectstrdata");
-  destinations.insert("mmcPr");
-  destinations.insert("mmcs");
-  destinations.insert("mmdatasource");
-  destinations.insert("mmheadersource");
-  destinations.insert("mmmailsubject");
-  destinations.insert("mmodso");
-  destinations.insert("mmodsofilter");
-  destinations.insert("mmodsofldmpdata");
-  destinations.insert("mmodsomappedname");
-  destinations.insert("mmodsoname");
-  destinations.insert("mmodsorecipdata");
-  destinations.insert("mmodsosort");
-  destinations.insert("mmodsosrc");
-  destinations.insert("mmodsotable");
-  destinations.insert("mmodsoudl");
-  destinations.insert("mmodsoudldata");
-  destinations.insert("mmodsouniquetag");
-  destinations.insert("mmPr");
-  destinations.insert("mmquery");
-  destinations.insert("mmr");
-  destinations.insert("mnary");
-  destinations.insert("mnaryPr");
-  destinations.insert("mnoBreak");
-  destinations.insert("mnum");
-  destinations.insert("mobjDist");
-  destinations.insert("moMath");
-  destinations.insert("moMathPara");
-  destinations.insert("moMathParaPr");
-  destinations.insert("mopEmu");
-  destinations.insert("mphant");
-  destinations.insert("mphantPr");
-  destinations.insert("mplcHide");
-  destinations.insert("mpos");
-  destinations.insert("mr");
-  destinations.insert("mrad");
-  destinations.insert("mradPr");
-  destinations.insert("mrPr");
-  destinations.insert("msepChr");
-  destinations.insert("mshow");
-  destinations.insert("mshp");
-  destinations.insert("msPre");
-  destinations.insert("msPrePr");
-  destinations.insert("msSub");
-  destinations.insert("msSubPr");
-  destinations.insert("msSubSup");
-  destinations.insert("msSubSupPr");
-  destinations.insert("msSup");
-  destinations.insert("msSupPr");
-  destinations.insert("mstrikeBLTR");
-  destinations.insert("mstrikeH");
-  destinations.insert("mstrikeTLBR");
-  destinations.insert("mstrikeV");
-  destinations.insert("msub");
-  destinations.insert("msubHide");
-  destinations.insert("msup");
-  destinations.insert("msupHide");
-  destinations.insert("mtransp");
-  destinations.insert("mtype");
-  destinations.insert("mvertJc");
-  destinations.insert("mvfmf");
-  destinations.insert("mvfml");
-  destinations.insert("mvtof");
-  destinations.insert("mvtol");
-  destinations.insert("mzeroAsc");
-  destinations.insert("mzeroDesc");
-  destinations.insert("mzeroWid");
-  destinations.insert("nesttableprops");
-  destinations.insert("nextfile");
-  destinations.insert("nonesttables");
-  destinations.insert("objalias");
-  destinations.insert("objclass");
-  destinations.insert("objdata");
-  destinations.insert("object");
-  destinations.insert("objname");
-  destinations.insert("objsect");
-  destinations.insert("objtime");
-  destinations.insert("oldcprops");
-  destinations.insert("oldpprops");
-  destinations.insert("oldsprops");
-  destinations.insert("oldtprops");
-  destinations.insert("oleclsid");
-  destinations.insert("operator");
-  destinations.insert("panose");
-  destinations.insert("password");
-  destinations.insert("passwordhash");
-  destinations.insert("pgp");
-  destinations.insert("pgptbl");
-  destinations.insert("picprop");
-  destinations.insert("pict");
-  destinations.insert("pn");
-  destinations.insert("pnseclvl");
-  destinations.insert("pntext");
-  destinations.insert("pntxta");
-  destinations.insert("pntxtb");
-  destinations.insert("printim");
-  destinations.insert("private");
-  destinations.insert("propname");
-  destinations.insert("protend");
-  destinations.insert("protstart");
-  destinations.insert("protusertbl");
-  destinations.insert("pxe");
-  destinations.insert("result");
-  destinations.insert("revtbl");
-  destinations.insert("revtim");
-  destinations.insert("rsidtbl");
-  destinations.insert("rxe");
-  destinations.insert("shp");
-  destinations.insert("shpgrp");
-  destinations.insert("shpinst");
-  destinations.insert("shppict");
-  destinations.insert("shprslt");
-  destinations.insert("shptxt");
-  destinations.insert("sn");
-  destinations.insert("sp");
-  destinations.insert("staticval");
-  destinations.insert("stylesheet");
-  destinations.insert("subject");
-  destinations.insert("sv");
-  destinations.insert("svb");
-  destinations.insert("tc");
-  destinations.insert("template");
-  destinations.insert("themedata");
-  destinations.insert("title");
-  destinations.insert("txe");
-  destinations.insert("ud");
-  destinations.insert("upr");
-  destinations.insert("userprops");
-  destinations.insert("wgrffmtfilter");
-  destinations.insert("windowcaption");
-  destinations.insert("writereservation");
-  destinations.insert("writereservhash");
-  destinations.insert("xe");
-  destinations.insert("xform");
-  destinations.insert("xmlattrname");
-  destinations.insert("xmlattrvalue");
-  destinations.insert("xmlclose");
-  destinations.insert("xmlname");
-  destinations.insert("xmlnstbl");
-  destinations.insert("xmlopen");
+  for (int i = 0; i < dest_names.size(); i++)
+    destinations.insert(as<std::string>(dest_names[i]));
 
   // special chars
-  // ordered by key just in case it is helpful...
-  specialchars.insert(std::pair<std::string, std::string>("bullet", "x2022"));
-  specialchars.insert(std::pair<std::string, std::string>("emdash", "x2014"));
-  specialchars.insert(std::pair<std::string, std::string>("emspace", "x2003"));
-  specialchars.insert(std::pair<std::string, std::string>("endash", "x2013"));
-  specialchars.insert(std::pair<std::string, std::string>("enspace", "x2002"));
-  specialchars.insert(std::pair<std::string, std::string>("ldblquote", "x201C"));
-  specialchars.insert(std::pair<std::string, std::string>("line", "x000A"));
-  specialchars.insert(std::pair<std::string, std::string>("lquote", "xu2018"));
-  specialchars.insert(std::pair<std::string, std::string>("page", "x000Ax000A"));
-  specialchars.insert(std::pair<std::string, std::string>("par", "x000A"));
-  specialchars.insert(std::pair<std::string, std::string>("qmspace", "x2005"));
-  specialchars.insert(std::pair<std::string, std::string>("rdblquote", "x201D"));
-  specialchars.insert(std::pair<std::string, std::string>("rquote", "x2019"));
-  specialchars.insert(std::pair<std::string, std::string>("sect", "x000Ax000A"));
-  specialchars.insert(std::pair<std::string, std::string>("tab", "x0009"));
+  for (int i = 0; i < special_keys.size(); i++)
+    specialchars.insert(std::pair<std::string, std::string>(
+        as<std::string>(special_keys[i]), as<std::string>(special_hex[i])));
+
 }
 
 
@@ -395,7 +93,10 @@ void append_out(std::vector<Section> &doc, std::string value, bool toconv)
 
 
 // [[Rcpp::export]]
-List strip_helper(CharacterMatrix match_mat) {
+List strip_helper(CharacterMatrix match_mat,
+                  CharacterVector dest_names,
+                  CharacterVector special_keys,
+                  CharacterVector special_hex) {
   // helps rtf2text function by handling loop part
   //
   // match_mat:
@@ -417,7 +118,8 @@ List strip_helper(CharacterMatrix match_mat) {
 
   std::set<std::string> destinations;
   SimpleOrderedDict<std::string> specialchars;
-  set_parameters(destinations, specialchars);
+  set_parameters(destinations, specialchars,
+                 dest_names, special_keys, special_hex);
 
   // debug
   // Rcout << "* special chars *\n";
