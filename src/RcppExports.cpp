@@ -5,14 +5,26 @@
 
 using namespace Rcpp;
 
-// strip_helper
-std::string strip_helper(CharacterMatrix match_list);
-RcppExport SEXP striprtf_strip_helper(SEXP match_listSEXP) {
+// to_hexstr
+std::string to_hexstr(int x, int pad);
+RcppExport SEXP striprtf_to_hexstr(SEXP xSEXP, SEXP padSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< CharacterMatrix >::type match_list(match_listSEXP);
-    rcpp_result_gen = Rcpp::wrap(strip_helper(match_list));
+    Rcpp::traits::input_parameter< int >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type pad(padSEXP);
+    rcpp_result_gen = Rcpp::wrap(to_hexstr(x, pad));
+    return rcpp_result_gen;
+END_RCPP
+}
+// strip_helper
+List strip_helper(CharacterMatrix match_mat);
+RcppExport SEXP striprtf_strip_helper(SEXP match_matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterMatrix >::type match_mat(match_matSEXP);
+    rcpp_result_gen = Rcpp::wrap(strip_helper(match_mat));
     return rcpp_result_gen;
 END_RCPP
 }

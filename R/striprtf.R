@@ -1,25 +1,30 @@
 #' Extract Text from RTF (Rich Text Format) File
 #' @param file  Path to an RTF file. Must be character of length 1.
-#' @param quiet Logical. If TRUE, progress report is shown.
-#' @return character of extracted text
+#' @param verbose Logical. If TRUE, progress report is shown.
+#' @param ... Addional arguments passed to \code{\link{readLines}}
+#' @return Character vector of extracted text
 #' @export
-striprtf <- function(file, quiet = FALSE)
+striprtf <- function(file, verbose = FALSE, ...)
 {
   stopifnot(is.character(file))
   stopifnot(length(file) == 1L)
 
-  scan(file, what = "character", sep = "\n", quiet = TRUE) %>%
+  readLines(file, warn = FALSE, ...) %>%
     paste0(collapse = "\n") %>%
-    rtf2text(quiet)
+    rtf2text(verbose)
 }
 
 
 
-#' @rdname striprtf
-#' @param text  Character of length 1.  Expected to be contents of an RTF file.
-#' @references https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
-rtf2text <- function(text, quiet = FALSE)
+
+
+
+
+
+rtf2text_R <- function(text, verbose = FALSE)
 {
+  ### old version ###
+
   # obtain code page
   cp <- stringr::str_match(text, "\\\\ansicpg([0-9]+)")[,2]
   if (is.na(cp)) {
@@ -244,3 +249,52 @@ rtf2text <- function(text, quiet = FALSE)
   strsplit(out, "\n") %>% unlist()
 
 }
+
+
+
+
+rtf2text_C <- function(text, verbose = FALSE)
+{
+  # obtain code page
+  cp <- stringr::str_match(text, "\\\\ansicpg([0-9]+)")[,2]
+  if (is.na(cp)) {
+    cpname <- NA_character_
+  } else {
+    cpname <- paste("CP", cp, sep = "")
+  }
+
+  pattern <- stringr::regex(
+    "\\\\([a-z]{1,32})(-?\\d{1,10})?[ ]?|\\\\'([0-9a-f]{2})|\\\\([^a-z])|([{}])|[\r\n]+|(.)",
+    ignore_case = TRUE)
+
+  match_mat <- stringr::str_match_all(text, pattern)[[1]]
+  if (nrow(match_mat) == 0) return(character(0))
+
+  parsed <- strip_helper(match_mat)
+  #print(parsed)
+  out <- strsplit(parsed$strcode, "x") %>%
+    lapply(as.hexmode) %>%
+    lapply(intToUtf8)
+  #print(out)
+
+  # code page translation
+  if (!is.na(cpname)) {
+    if (cpname %in% names(.cptable)) {
+      out[parsed$toconv] <- lapply(out[parsed$toconv], function(a) {
+        chartr(.cptable[[cpname]]$before, .cptable[[cpname]]$after, a)
+      })
+    } else {
+      warning("conversion table for ", cpname, " is missing")
+    }
+  }
+
+  # return by splitting by line breaks
+  paste0(out, collapse = "") %>% strsplit("\n") %>% unlist()
+}
+
+
+
+#' @rdname striprtf
+#' @param text  Character of length 1.  Expected to be contents of an RTF file.
+rtf2text <- rtf2text_C
+

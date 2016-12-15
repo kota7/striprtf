@@ -5,24 +5,23 @@
 \alias{striprtf}
 \title{Extract Text from RTF (Rich Text Format) File}
 \usage{
-striprtf(file, quiet = FALSE)
+striprtf(file, verbose = FALSE, ...)
 
-rtf2text(text, quiet = FALSE)
+rtf2text(text, verbose = FALSE)
 }
 \arguments{
 \item{file}{Path to an RTF file. Must be character of length 1.}
 
-\item{quiet}{Logical. If TRUE, progress report is shown.}
+\item{verbose}{Logical. If TRUE, progress report is shown.}
+
+\item{...}{Addional arguments passed to \code{\link{readLines}}}
 
 \item{text}{Character of length 1.  Expected to be contents of an RTF file.}
 }
 \value{
-character of extracted text
+Character vector of extracted text
 }
 \description{
 Extract Text from RTF (Rich Text Format) File
-}
-\references{
-https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676
 }
 
