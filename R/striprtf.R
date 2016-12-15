@@ -1,9 +1,12 @@
 #' Extract Text from RTF (Rich Text Format) File
 #' @param file  Path to an RTF file. Must be character of length 1.
-#' @param verbose Logical. If TRUE, progress report is shown.
+#' @param verbose Logical. If TRUE, progress report is printed on console.
+#' While it can be informative when parsing a large file,
+#' this option itself makes the process slow.
 #' @param ... Addional arguments passed to \code{\link{readLines}}
 #' @return Character vector of extracted text
 #' @export
+#' @examples striprtf(system.file("extdata/king.rtf", package = "striprtf"))
 striprtf <- function(file, verbose = FALSE, ...)
 {
   stopifnot(is.character(file))
@@ -255,6 +258,13 @@ striprtf <- function(file, verbose = FALSE, ...)
 
 rtf2text_C <- function(text, verbose = FALSE)
 {
+  stopifnot(is.character(text))
+  stopifnot(is.logical(verbose))
+
+  # if text has more than 1 length, collapse
+  if (length(text) > 1) text <- paste0(text, collapse = "character")
+
+
   # obtain code page
   cp <- stringr::str_match(text, "\\\\ansicpg([0-9]+)")[,2]
   if (is.na(cp)) {
@@ -274,7 +284,8 @@ rtf2text_C <- function(text, verbose = FALSE)
   parsed <- strip_helper(match_mat,
                          dest_names = .destinations,
                          special_keys = .specialchars$keys,
-                         special_hex  = .specialchars$hexstr)
+                         special_hex  = .specialchars$hexstr,
+                         verbose = verbose)
   #print(parsed)
 
   out <- strsplit(parsed$strcode, "x") %>%

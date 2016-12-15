@@ -12,7 +12,9 @@ rtf2text(text, verbose = FALSE)
 \arguments{
 \item{file}{Path to an RTF file. Must be character of length 1.}
 
-\item{verbose}{Logical. If TRUE, progress report is shown.}
+\item{verbose}{Logical. If TRUE, progress report is printed on console.
+While it can be informative when parsing a large file,
+this option itself makes the process slow.}
 
 \item{...}{Addional arguments passed to \code{\link{readLines}}}
 
@@ -23,5 +25,8 @@ Character vector of extracted text
 }
 \description{
 Extract Text from RTF (Rich Text Format) File
+}
+\examples{
+striprtf(system.file("extdata/king.rtf", package = "striprtf"))
 }
 

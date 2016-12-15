@@ -4,6 +4,7 @@
 #include <vector>
 #include <stack>
 #include <cstdio>
+#include <ostream>
 
 #include "dict.h"
 #include "dechex.h"
@@ -96,7 +97,8 @@ void append_out(std::vector<Section> &doc, std::string value, bool toconv)
 List strip_helper(CharacterMatrix match_mat,
                   CharacterVector dest_names,
                   CharacterVector special_keys,
-                  CharacterVector special_hex) {
+                  CharacterVector special_hex,
+                  bool verbose) {
   // helps rtf2text function by handling loop part
   //
   // match_mat:
@@ -109,17 +111,29 @@ List strip_helper(CharacterMatrix match_mat,
   //     col 4: char
   //     col 5: brace
   //     col 6: tchar
+  // dest_names:
+  //   character vector of destination words
+  //
+  // special_keys, special_hex:
+  //   characte vVector of same size, which match the
+  //   special words to the hex string to replace
   //
   // returns a list of two vectors of the same length
-  //   - str  : character vector of hex codes, in the form, e.g, x0010x3010...
-  //   - conv : logocal vector indicating
-  //            whether the codes should be converted.
+  //   - strcode : character vector of hex codes, in the form
+  //               e.g, x0010x3010...
+  //   - toconv  : logocal vector indicating
+  //               whether the codes should be converted using the cp tables.
   //
+
+  // make sure that the special_keys and special_hex have the same size
+  if (special_keys.size() != special_hex.size())
+    stop("special keys and values have different length");
 
   std::set<std::string> destinations;
   SimpleOrderedDict<std::string> specialchars;
   set_parameters(destinations, specialchars,
                  dest_names, special_keys, special_hex);
+
 
   // debug
   // Rcout << "* special chars *\n";
@@ -130,6 +144,13 @@ List strip_helper(CharacterMatrix match_mat,
   // for (std::set<std::string>::iterator it = destinations.begin();
   //      it != destinations.end(); ++it)
   //   Rcout << "  " << *it << "\n";
+
+  // for (int i = 0; i < special_keys.size(); i++)
+  //   Rcout << special_keys[i] << " " <<
+  //     specialchars.haskey(as<std::string>(special_keys[i])) << "\n";
+  // for (int i = 0; i < specialchars.size(); i++)
+  //   Rcout << specialchars.keys[i] << "=" <<
+  //     specialchars.values[i] << "\n";
 
 
 
@@ -142,8 +163,26 @@ List strip_helper(CharacterMatrix match_mat,
 
   long long N = match_mat.nrow();
   if (match_mat.ncol() < 7) stop("match_mat must have 7 columns");
+
+  // initialize paramters for verbose mode
+  int max_bars = 50;
+  int cur_bars = 0;
+  std::string bar = "";
+  std::string emp(max_bars, ' ');
   for (long long i = 0; i < N; i++)
   {
+    // progress report
+    if (verbose) {
+      if (max_bars * (i+1) / N > cur_bars) {
+        cur_bars = max_bars * (i+1) / N;
+        bar.push_back('=');
+        emp.erase(0,1);
+      }
+      int pct = (i+1)*100/N;
+      Rcout << "\r[" + bar + emp + "]" << pct << "%";// << std::flush;
+    }
+
+
 
     std::string word  = as<std::string>(match_mat(i,1));
     std::string arg   = as<std::string>(match_mat(i,2));
@@ -186,6 +225,7 @@ List strip_helper(CharacterMatrix match_mat,
         ignorable = true;
       }
     } else if (word != "") {
+      //Rcout << word << "...\n";
       curskip = 0;
       if (destinations.find(word) != destinations.end()) {
         ignorable = true;
@@ -222,7 +262,7 @@ List strip_helper(CharacterMatrix match_mat,
       }
     }
   }
-
+  if (verbose) Rcout << "\n";
 
   // compile output
   CharacterVector str_vec;
@@ -240,15 +280,5 @@ List strip_helper(CharacterMatrix match_mat,
 
 
 /*** R
-
-library(magrittr)
-text <- readLines("tests/testthat/cp932.rtf", warn = FALSE) %>%
-  paste0(collapse = "\n")
-pattern <- stringr::regex("\\\\([a-z]{1,32})(-?\\d{1,10})?[ ]?|\\\\'([0-9a-f]{2})|\\\\([^a-z])|([{}])|[\r\n]+|(.)",
-                          ignore_case = TRUE)
-match_mat <- stringr::str_match_all(text, pattern)[[1]]
-o <- striprtf:::strip_helper(match_mat)
-strsplit(o$strcode, "x") %>% unlist() %>% as.hexmode() %>% as.integer() %>%
-  intToUtf8()
 
 */
