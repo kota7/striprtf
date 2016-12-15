@@ -23,28 +23,29 @@ test_that("big", {
 
 test_that("libre", {
   x <- striprtf("libre.rtf", quiet = TRUE)
-  check <- c("リブレオフィスで作ったＲＴＦファイルです。",
-             "アンダーラインを引いています。",
-             "イタリックです。",
-             "太字です。") %in% x
-  expect_true(all(check))
+  ans <- scan("libre.ans", what = "character", sep = "\n", quiet = TRUE)
+  check <- lapply(ans, function(a) which(x == a))
+  len <- lapply(check, length) %>% unlist()
+  expect_true(all(len == 1L))                # inclusion check
+  expect_true(all(diff(unlist(check)) > 0))  # order check
 })
 
 
 test_that("abiword", {
   x <- striprtf("abiword.rtf", quiet = TRUE)
-  check <- c("THIS IS A FILE CREATED BY ABIWORD.",
-             "BASED ON CODE PAGE 1252.",
-             "このファイルはアビワードを用いて作りました。",
-             "コードページ１２５２に基づいています。") %in% x
-  expect_true(all(check))
+  ans <- scan("abiword.ans", what = "character", sep = "\n", quiet = TRUE)
+  check <- lapply(ans, function(a) which(x == a))
+  len <- lapply(check, length) %>% unlist()
+  expect_true(all(len == 1L))                # inclusion check
+  expect_true(all(diff(unlist(check)) > 0))  # order check
 })
 
 
 test_that("cp932", {
   x <- striprtf("cp932.rtf", quiet = TRUE)
-  check <- c("This is a test file.",
-             #"japanese here"
-             "1234567890") %in% x
-  expect_true(all(check))
+  ans <- scan("cp932.ans", what = "character", sep = "\n", quiet = TRUE)
+  check <- lapply(ans, function(a) which(x == a))
+  len <- lapply(check, length) %>% unlist()
+  expect_true(all(len == 1L))                # inclusion check
+  expect_true(all(diff(unlist(check)) > 0))  # order check
 })

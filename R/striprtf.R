@@ -127,12 +127,13 @@ rtf2text <- function(text, quiet = FALSE)
 
 
 
-  stack = list()
-  ignorable = FALSE   # Whether this group (and all inside it) are "ignorable".
-  ucskip = 1L         # Number of ASCII characters to skip after a unicode character.
-  curskip = 0L        # Number of ASCII characters left to skip
-  out = character(0)  # Output buffer.
+  stack     <- list() # keep previous state (used when entering new brace)
+  ignorable <- FALSE  # Whether this group (and all inside it) are "ignorable".
+  ucskip    <- 1L     # N of ASCII characters to skip after a unicode character.
+  curskip   <- 0L     # N of ASCII characters left to skip
+  curhex    <- ""     # current consecutive hex expression
 
+  out <- character(0)  # Output buffer.
   match_list <- stringr::str_match_all(text, pattern)[[1]]
   if (nrow(match_list) == 0) return(out)
 
@@ -152,6 +153,14 @@ rtf2text <- function(text, quiet = FALSE)
     char  <- m[5]
     brace <- m[6]
     tchar <- m[7]
+
+    # if consecutive hex is done, add the string to out
+    if (nchar(curhex) > 0 && (hex == "" || nchar(curhex) == 4L)) {
+      n <- as.hexmode(curhex) %>% as.integer()
+      #cat(curhex, " -> ", n, "or", sprintf("%x", n), "\n")
+      out <- c(out, intToUtf8(n))
+      curhex <- ""
+    }
 
     if (brace != "") {
       curskip = 0L
@@ -186,7 +195,7 @@ rtf2text <- function(text, quiet = FALSE)
         ucskip <- as.integer(arg)
       } else if (word == "u") {
         n <- as.integer(arg)
-        cat("u", n, "\n")
+        #cat("u", n, "\n")
         if (n < 0) n <- n + 0x10000
         if (n > 127) {
           out <- c(out, intToUtf8(n))
@@ -199,19 +208,21 @@ rtf2text <- function(text, quiet = FALSE)
       if (curskip > 0) {
         curskip <- curskip - 1
       } else if (!ignorable) {
-        n <- as.hexmode(hex) %>% as.integer()
-        cat("hex", n, "or", sprintf("%x", n), "\n")
-        if (n > 127) {
-          out <- c(out, intToUtf8(n))
-        } else {
-          out <- c(out, intToUtf8(n))
-        }
+        curhex <- paste(curhex, hex, sep = "")
+        # n <- as.hexmode(hex) %>% as.integer()
+        # cat("hex", n, "or", sprintf("%x", n), "\n")
+        #hexvec <- c(hexvec, n)
+        # if (n > 127) {
+        #   out <- c(out, intToUtf8(n))
+        # } else {
+        #   out <- c(out, intToUtf8(n))
+        # }
       }
     } else if (tchar != "") {
       if (curskip > 0) {
-        curskip <- cursip - 1
+        curskip <- curskip - 1
       } else if (!ignorable) {
-        cat("tchar", tchar, "\n")
+        #cat("tchar", tchar, "\n")
         out <- c(out, tchar)
       }
     }
@@ -219,8 +230,17 @@ rtf2text <- function(text, quiet = FALSE)
   if (!quiet) cat("\n")
   out <- paste0(out, collapse = "")
 
+  # code page translation
+  if (!is.na(cpname)) {
+    if (cpname %in% names(.cptable)) {
+      out <- chartr(.cptable[[cpname]]$before, .cptable[[cpname]]$after, out)
+    } else {
+      warning("conversion table for ", cpname, " is missing")
+    }
+  }
 
-  # return
+
+  # return by splitting by line breaks
   strsplit(out, "\n") %>% unlist()
 
 }

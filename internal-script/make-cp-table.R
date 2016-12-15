@@ -2,7 +2,7 @@
 # save them as internal data
 library(magrittr)
 
-undefined <- 0x3f
+undefined <- 0x3f   # undefined characters are converted to '?'
 
 file_list <- dir("data-raw", "\\.[Tt][Xx][Tt]$", full.names = TRUE)
 out <- list()
@@ -22,9 +22,17 @@ for (file in file_list)
   # we only need the cases where codes are different
   x <- x[x$before != x$after,]
 
+  # create before and after strings for conversion
+  bef <- intToUtf8(x$before) %>% paste0(collapse = "")
+  aft <- intToUtf8(x$after) %>% paste0(collapse = "")
+  stopifnot(nchar(bef) == nchar(aft))
+  tmp <- list(before = bef, after = aft)
+
   #table_list <- c(table_list, table_name)
-  out <- c(out, setNames(list(x), table_name))
+  out <- c(out, list(tmp) %>% setNames(table_name))
 }
+
+
 
 .cptable <- out
 devtools::use_data(.cptable, internal = TRUE, overwrite = TRUE)

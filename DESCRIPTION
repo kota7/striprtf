@@ -10,9 +10,13 @@ Description:
   Extracts plain text from RTF (Rich Text Format) file.
 License: MIT + file LICENSE
 LazyData: TRUE
+Depends:
+    R (>= 2.10)
 Imports:
     magrittr,
-    stringr
+    stringr,
+    Rcpp
 Suggests:
     testthat
 RoxygenNote: 5.0.1
+LinkingTo: Rcpp
