@@ -23,7 +23,7 @@ test_that("big", {
 
 test_that("libre", {
   x <- striprtf("libre.rtf", quiet = TRUE)
-  ans <- scan("libre.ans", what = "character", sep = "\n", quiet = TRUE)
+  ans <- readLines("libre.ans", encoding = "UTF-8")
   check <- lapply(ans, function(a) which(x == a))
   len <- lapply(check, length) %>% unlist()
   expect_true(all(len == 1L))                # inclusion check
@@ -33,7 +33,7 @@ test_that("libre", {
 
 test_that("abiword", {
   x <- striprtf("abiword.rtf", quiet = TRUE)
-  ans <- scan("abiword.ans", what = "character", sep = "\n", quiet = TRUE)
+  ans <- readLines("abiword.ans", encoding = "UTF-8")
   check <- lapply(ans, function(a) which(x == a))
   len <- lapply(check, length) %>% unlist()
   expect_true(all(len == 1L))                # inclusion check
@@ -41,9 +41,19 @@ test_that("abiword", {
 })
 
 
-test_that("cp932", {
+test_that("Japanese (cp932)", {
   x <- striprtf("cp932.rtf", quiet = TRUE)
-  ans <- scan("cp932.ans", what = "character", sep = "\n", quiet = TRUE)
+  ans <- readLines("cp932.ans", encoding = "UTF-8")
+  check <- lapply(ans, function(a) which(x == a))
+  len <- lapply(check, length) %>% unlist()
+  expect_true(all(len == 1L))                # inclusion check
+  expect_true(all(diff(unlist(check)) > 0))  # order check
+})
+
+
+test_that("Chinese and Korean", {
+  x <- striprtf("eastasia.rtf", quiet = TRUE)
+  ans <- readLines("eastasia.ans", encoding = "UTF-8")
   check <- lapply(ans, function(a) which(x == a))
   len <- lapply(check, length) %>% unlist()
   expect_true(all(len == 1L))                # inclusion check
