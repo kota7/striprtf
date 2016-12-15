@@ -1,8 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 
-
 internal-script
 data-raw
-
 .travis.yml
+^README\.Rmd$
+^README-.*\.png$
