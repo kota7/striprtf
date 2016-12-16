@@ -56,6 +56,7 @@ striprtf <- function(file, verbose = FALSE, ...)
 
 #' @rdname striprtf
 #' @param text  Character of length 1.  Expected to be contents of an RTF file.
+#' @export
 rtf2text <- function(text, verbose = FALSE)
 {
   stopifnot(is.character(text))
