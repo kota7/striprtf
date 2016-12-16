@@ -3,5 +3,4 @@
 export(striprtf)
 importFrom(Rcpp,sourceCpp)
 importFrom(magrittr,"%>%")
-importFrom(utils,flush.console)
 useDynLib(striprtf)

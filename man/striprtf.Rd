@@ -24,15 +24,37 @@ this option itself makes the process slow.}
 Character vector of extracted text
 }
 \description{
-Extract Text from RTF (Rich Text Format) File
+Parses an RTF file and extracts plain text as character vector.
+}
+\details{
+Rich text format (RTF) files are written as a text file
+consisting of ASCII characters.  The specification has been developed by
+Microsoft.
+This function interprets the character strings and extracts plain texts of
+the file.
+Major part of the algorithm this function employs has been discussed in a
+stack overflow thread (\url{http://stackoverflow.com/a/188877}) and later
+refactored and implemented by Gilson Filho for python 3
+(\url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}).
+The function is a translation of the above codes to R language,
+associated with C++ codes for enhancement.
+
+An advance from the preceding implementation is that the function
+accomodates with various ANSI code pages.  For example, RTF files created
+by Japanese version of Microsoft Word marks \code{\\ansicpg932}, which indicates
+the code page 932 is used for letter-code conversion.
+The function detect the code page indication and
+convert them to UTF-8 as possible.  Conversion table is retrieved from
+here (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
 }
 \examples{
 striprtf(system.file("extdata/king.rtf", package = "striprtf"))
 }
 \references{
 \itemize{
- \item{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}
- \item{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}
+ \item{Python 3 implementation by Gilson Filho: \url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}}
+ \item{Original discussion thread: \url{http://stackoverflow.com/a/188877}}
+ \item{Code page table: \url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}}
 }
 }
 

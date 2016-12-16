@@ -1,13 +1,13 @@
 Package: striprtf
 Type: Package
 Title: Extract Text from RTF (Rich Text Format) File
-Version: 0.1.1
+Version: 0.2.1
 Authors@R: c(
-  person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
+    person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
   )
 Maintainer: Kota Mori <kmori05@gmail.com>
 Description:
-  Extracts plain text from RTF (Rich Text Format) file.
+    Extracts plain text from RTF (Rich Text Format) file.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
@@ -15,9 +15,10 @@ Depends:
 Imports:
     magrittr,
     Rcpp,
-    stringr,
-    utils
+    stringr
 Suggests:
     testthat
 RoxygenNote: 5.0.1
 LinkingTo: Rcpp
+URL: https://github.com/kota7/striprtf
+BugReports: https://github.com/kota7/striprtf/issues
