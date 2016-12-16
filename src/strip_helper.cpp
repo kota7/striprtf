@@ -81,7 +81,7 @@ void append_out(std::vector<Section> &doc, std::string value, bool toconv)
 
 
   // if vec size is zero, just append
-  long long N = doc.size();
+  int N = doc.size();
   if (N == 0) {
     doc.push_back(Section(value, toconv));
     return;
@@ -168,7 +168,8 @@ List strip_helper(CharacterMatrix match_mat,
   int curskip = 0;
   std::string curhex = "";
 
-  long long N = match_mat.nrow();
+  int N = match_mat.nrow();
+  //Rcout << N << "rows\n";
   if (match_mat.ncol() < 7) stop("match_mat must have 7 columns");
 
   // initialize paramters for verbose mode
@@ -176,7 +177,7 @@ List strip_helper(CharacterMatrix match_mat,
   int cur_bars = 0;
   std::string bar = "";
   std::string emp(max_bars, ' ');
-  for (long long i = 0; i < N; i++)
+  for (int i = 0; i < N; i++)
   {
     // progress report
     if (verbose) {
@@ -274,7 +275,7 @@ List strip_helper(CharacterMatrix match_mat,
   // compile output
   CharacterVector str_vec;
   LogicalVector   toconv_vec;
-  for (unsigned long long i = 0; i < doc.size(); i++)
+  for (unsigned int i = 0; i < doc.size(); i++)
   {
     str_vec.push_back(doc[i].strcode);
     toconv_vec.push_back(doc[i].toconv);
