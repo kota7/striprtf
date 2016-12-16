@@ -1,25 +1,32 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+
+
+
 [![Build Status](https://travis-ci.org/kota7/striprtf.svg?branch=master)](https://travis-ci.org/kota7/striprtf)
 
-striprtf: Extract Text from RTF (Rich Text Format) File
-=======================================================
+# striprtf: Extract Text from RTF (Rich Text Format) File
 
-Installation
-------------
+
+## Installation
 
 Install from Github using `devtools` library.
-
-``` r
+```R
 devtools::install_github("kota7/striprtf")
 ```
 
-Usage
------
 
-The package contains virtually only one function: `striprtf`, which parses an Rich Text Format (RTF) file and extracts plain text out of it.
+## Usage
 
-``` r
+The package contains virtually only one function: `striprtf`, which parses
+an Rich Text Format (RTF) file and extracts plain text out of it.
+
+
+```r
 library(striprtf)
 x <- striprtf(system.file("extdata/king.rtf", package = "striprtf"))
 head(x)
@@ -33,7 +40,7 @@ head(x)
 
 The package has also been tested with documents in East Asian languages.
 
-``` r
+```r
 striprtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
 #>  [1] "雨ニモマケズ"                     "風ニモマケズ"                    
 #>  [3] "雪ニモ夏ノ暑サニモマケヌ"         "丈夫ナカラダヲモチ"              
@@ -62,3 +69,7 @@ striprtf(system.file("extdata/mean.rtf", package = "striprtf"))
 #> [4] ""                                                                                                                                                              
 #> [5] ""
 ```
+
+
+
+
