@@ -10,6 +10,10 @@ Installation
 
 Install from Github using `devtools` library.
 
+``` r
+devtools::install_github("kota7/striprtf")
+```
+
 Usage
 -----
 
@@ -27,7 +31,7 @@ head(x)
 #> [6] "But we refuse to believe that the bank of justice is bankrupt. We refuse to believe that there are insufficient funds in the great vaults of opportunity of this nation. And so we've come to cash this check, a check that will give us upon demand the riches of freedom and security of justice. We have also come to this hallowed spot to remind America of the fierce urgency of now. This is no time to engage in the luxury of cooling off or to take the tranquilizing drug of gradualism. Now is the time to make real the promises of democracy. Now is the time to rise from the dark and desolate valley of segregation to the sunlit path of racial justice. Now is the time to lift our nation from the quicksands of racial injustice to the solid rock of brotherhood. Now is the time to make justice a reality for all of God's children."
 ```
 
-The package has been tested with documents in East Asian languages.
+The package has also been tested with documents in East Asian languages.
 
 ``` r
 striprtf(system.file("extdata/amenimo.rtf", package = "striprtf"))

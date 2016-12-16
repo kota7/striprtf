@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ## Installation
 
 Install from Github using `devtools` library.
-```{r, eval=FALSE, include=FALSE}
+```R
 devtools::install_github("kota7/striprtf")
 ```
 
