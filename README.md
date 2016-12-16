@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/kota7/striprtf.svg?branch=master)](https://travis-ci.org/kota7/striprtf)
+[![Build Status](https://travis-ci.org/kota7/striprtf.svg?branch=master)](https://travis-ci.org/kota7/striprtf) [![CRAN Status](http://www.r-pkg.org/badges/version/striprtf)](http://www.r-pkg.org/badges/version/striprtf)
 
 striprtf: Extract Text from RTF (Rich Text Format) File
 =======================================================
@@ -8,7 +8,13 @@ striprtf: Extract Text from RTF (Rich Text Format) File
 Installation
 ------------
 
-Install from Github using `devtools` library.
+Install from CRAN.
+
+``` r
+install.packages("striprtf")
+```
+
+Or install development version from Github using `devtools` library.
 
 ``` r
 devtools::install_github("kota7/striprtf")
