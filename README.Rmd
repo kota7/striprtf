@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 
 ## Installation
 
+Install from Github using `devtools` library.
 ```{r, eval=FALSE, include=FALSE}
 devtools::install_github("kota7/striprtf")
 ```
@@ -34,6 +35,13 @@ an Rich Text Format (RTF) file and extract plain text out of it.
 library(striprtf)
 x <- striprtf(system.file("extdata/king.rtf", package = "striprtf"))
 head(x)
+```
+
+The package has been tested with documents in East Asian languages.
+```{r}
+striprtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
+striprtf(system.file("extdata/mean.rtf", package = "striprtf"))
+
 ```
 
 
