@@ -37,11 +37,12 @@ x <- striprtf(system.file("extdata/king.rtf", package = "striprtf"))
 head(x)
 ```
 
-The package has been tested with documents in East Asian languages.
+The package has also been tested with documents in East Asian languages.
 ```{r}
 striprtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
 striprtf(system.file("extdata/mean.rtf", package = "striprtf"))
-
 ```
+
+
 
 

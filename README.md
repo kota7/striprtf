@@ -52,7 +52,7 @@ striprtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
 #> [37] "南無浄行菩薩"                     "南無安立行菩薩"                  
 #> [39] ""                                 ""
 striprtf(system.file("extdata/mean.rtf", package = "striprtf"))
-#> [1] "詩曰：「衣錦尚絅」，惡其文之著也。故君子之道，闇然而日章；小人之道，的然而日亡。君子之道：淡而不厭，簡而文，<U+6EAB>而理，知遠之近，知風之自，知微之顯，可與入德矣。"
+#> [1] "詩曰：「衣錦尚絅」，惡其文之著也。故君子之道，闇然而日章；小人之道，的然而日亡。君子之道，淡而不厭，簡而文，<U+6EAB>而理，知遠之近，知風之自，知微之顯，可與入德矣。"
 #> [2] ""                                                                                                                                                              
 #> [3] "『中庸』　Doctrine of the Mean"                                                                                                                                
 #> [4] ""                                                                                                                                                              
