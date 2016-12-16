@@ -74,6 +74,12 @@ void set_parameters(
 
 void append_out(std::vector<Section> &doc, std::string value, bool toconv)
 {
+  // debug
+  // if (value == "xFEFF") {
+  //   stop("It's me!\n");
+  // }
+
+
   // if vec size is zero, just append
   long long N = doc.size();
   if (N == 0) {
@@ -90,6 +96,7 @@ void append_out(std::vector<Section> &doc, std::string value, bool toconv)
 
   // if the toconv is different from the last element, start a new section
   doc.push_back(Section(value, toconv));
+
 }
 
 

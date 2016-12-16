@@ -16,3 +16,24 @@ knitr::opts_chunk$set(
 [![Build Status](https://travis-ci.org/kota7/striprtf.svg?branch=master)](https://travis-ci.org/kota7/striprtf)
 
 # striprtf: Extract Text from RTF (Rich Text Format) File
+
+
+## Installation
+
+```{r, eval=FALSE, include=FALSE}
+devtools::install_github("kota7/striprtf")
+```
+
+
+## Usage
+
+The package contains virtually only one function: `striprtf`, which parses
+an Rich Text Format (RTF) file and extract plain text out of it.
+
+```{r}
+library(striprtf)
+x <- striprtf(system.file("extdata/king.rtf", package = "striprtf"))
+head(x)
+```
+
+
