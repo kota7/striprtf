@@ -29,7 +29,7 @@ devtools::install_github("kota7/striprtf")
 ## Usage
 
 The package contains virtually only one function: `striprtf`, which parses
-an Rich Text Format (RTF) file and extract plain text out of it.
+an Rich Text Format (RTF) file and extracts plain text out of it.
 
 ```{r}
 library(striprtf)
