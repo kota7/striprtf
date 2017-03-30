@@ -19,7 +19,10 @@ devtools::install_github("kota7/striprtf")
 Usage
 -----
 
-The package exports only two functions: - `read_rtf` takes a path to an Rich Text Format (RTF) file and extracts plain text out of it. - `strip_rtf` does the same by taking string instead of file path.
+The package exports only two functions:
+
+-   `read_rtf` takes a path to an Rich Text Format (RTF) file and extracts plain text out of it.
+-   `strip_rtf` does the same by with string input instead of file path.
 
 ``` r
 library(striprtf)
