@@ -51,22 +51,22 @@ test_that("Japanese (cp932)", {
 })
 
 
-test_that("Chinese and Korean", {
-  x <- striprtf("eastasia.rtf")
-  ans <- readLines("eastasia.ans", encoding = "UTF-8")
-  check <- lapply(ans, function(a) which(x == a))
-  len <- lapply(check, length) %>% unlist()
-  expect_true(all(len == 1L))                # inclusion check
-  expect_true(all(diff(unlist(check)) > 0))  # order check
-})
+# test_that("Chinese and Korean", {
+#   x <- striprtf("eastasia.rtf")
+#   ans <- readLines("eastasia.ans", encoding = "UTF-8")
+#   check <- lapply(ans, function(a) which(x == a))
+#   len <- lapply(check, length) %>% unlist()
+#   expect_true(all(len == 1L))                # inclusion check
+#   expect_true(all(diff(unlist(check)) > 0))  # order check
+# })
 
 
-test_that("Europe", {
-  x <- striprtf("europe.rtf")
-  ans <- readLines("europe.ans", encoding = "UTF-8")
-  #TBD...
-  #check <- lapply(ans, function(a) which(x == a))
-  #len <- lapply(check, length) %>% unlist()
-  #expect_true(all(len == 1L))                # inclusion check
-  #expect_true(all(diff(unlist(check)) > 0))  # order check
-})
+# test_that("Europe", {
+#   x <- striprtf("europe.rtf")
+#   ans <- readLines("europe.ans", encoding = "UTF-8")
+#   #TBD...
+#   #check <- lapply(ans, function(a) which(x == a))
+#   #len <- lapply(check, length) %>% unlist()
+#   #expect_true(all(len == 1L))                # inclusion check
+#   #expect_true(all(diff(unlist(check)) > 0))  # order check
+# })

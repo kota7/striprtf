@@ -1,7 +1,7 @@
 Package: striprtf
 Type: Package
 Title: Extract Text from RTF File
-Version: 0.2.3
+Version: 0.3.1
 Authors@R: c(
     person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
   )
@@ -11,7 +11,7 @@ Description:
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
-    R (>= 2.10)
+    R (>= 3.0.0)
 Imports:
     magrittr,
     Rcpp,
