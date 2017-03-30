@@ -8,13 +8,9 @@ striprtf: Extract Text from RTF (Rich Text Format) File
 Installation
 ------------
 
-Install from CRAN.
+This package is currently not on CRAN.
 
-``` r
-install.packages("striprtf")
-```
-
-Or install development version from Github using `devtools` library.
+Install development version from Github using `devtools` library.
 
 ``` r
 devtools::install_github("kota7/striprtf")
@@ -23,11 +19,11 @@ devtools::install_github("kota7/striprtf")
 Usage
 -----
 
-The package contains virtually only one function: `striprtf`, which parses an Rich Text Format (RTF) file and extracts plain text out of it.
+The package exports only two functions: - `read_rtf` takes a path to an Rich Text Format (RTF) file and extracts plain text out of it. - `strip_rtf` does the same by taking string instead of file path.
 
 ``` r
 library(striprtf)
-x <- striprtf(system.file("extdata/king.rtf", package = "striprtf"))
+x <- read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
 head(x)
 #> [1] "I am happy to join with you today in what will go down in history as the greatest demonstration for freedom in the history of our nation."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 #> [2] "Five score years ago, a great American, in whose symbolic shadow we stand today, signed the Emancipation Proclamation. This momentous decree came as a great beacon light of hope to millions of Negro slaves who had been seared in the flames of withering injustice. It came as a joyous daybreak to end the long night of their captivity."                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
@@ -40,7 +36,7 @@ head(x)
 The package has also been tested with documents in East Asian languages.
 
 ``` r
-striprtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
+read_rtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
 #>  [1] "雨ニモマケズ"                     "風ニモマケズ"                    
 #>  [3] "雪ニモ夏ノ暑サニモマケヌ"         "丈夫ナカラダヲモチ"              
 #>  [5] "慾ハナク"                         "決シテ瞋ラズ"                    
@@ -61,8 +57,8 @@ striprtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
 #> [35] "南無妙法蓮華経"                   "南無釈迦牟尼仏"                  
 #> [37] "南無浄行菩薩"                     "南無安立行菩薩"                  
 #> [39] ""                                 ""
-striprtf(system.file("extdata/mean.rtf", package = "striprtf"))
-#> [1] "詩曰：「衣錦尚絅」，惡其文之著也。故君子之道，闇然而日章；小人之道，的然而日亡。君子之道，淡而不厭，簡而文，溫而理，知遠之近，知風之自，知微之顯，可與入德矣。"
+read_rtf(system.file("extdata/mean.rtf", package = "striprtf"))
+#> [1] "詩曰：「衣錦尚絅」，惡其文之著也。故君子之道，闇然而日章；小人之道，的然而日亡。君子之道，淡而不厭，簡而文，<U+6EAB>而理，知遠之近，知風之自，知微之顯，可與入德矣。"
 #> [2] ""                                                                                                                                                              
 #> [3] "『中庸』　Doctrine of the Mean"                                                                                                                                
 #> [4] ""                                                                                                                                                              

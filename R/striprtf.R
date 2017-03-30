@@ -8,7 +8,7 @@
 #' @param ... Addional arguments passed to \code{\link{readLines}}
 #' @return Character vector of extracted text
 #' @export
-#' @examples striprtf(system.file("extdata/king.rtf", package = "striprtf"))
+#' @examples read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
 #' @references
 #' \itemize{
 #'  \item{Python 3 implementation by Gilson Filho: \url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}}
@@ -35,14 +35,14 @@
 #' convert them to UTF-8 as possible.  Conversion table is retrieved from
 #' here (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
 #'
-striprtf <- function(file, verbose = FALSE, ...)
+read_rtf <- function(file, verbose = FALSE, ...)
 {
   stopifnot(is.character(file))
   stopifnot(length(file) == 1L)
 
   readLines(file, warn = FALSE, ...) %>%
     paste0(collapse = "\n") %>%
-    rtf2text(verbose)
+    strip_rtf(verbose)
 }
 
 
@@ -54,10 +54,10 @@ striprtf <- function(file, verbose = FALSE, ...)
 
 
 
-#' @rdname striprtf
+#' @rdname read_rtf
 #' @param text  Character of length 1.  Expected to be contents of an RTF file.
 #' @export
-rtf2text <- function(text, verbose = FALSE)
+strip_rtf <- function(text, verbose = FALSE)
 {
   stopifnot(is.character(text))
   stopifnot(is.logical(verbose))
@@ -85,6 +85,9 @@ rtf2text <- function(text, verbose = FALSE)
 
   match_mat <- stringr::str_match_all(text, pattern)[[1]]
   if (nrow(match_mat) == 0) return(character(0))
+  # str_match_all now returns NAs for unmatched optional groups
+  # I replace NAs with "" so that the c++ function works as before
+  match_mat[is.na(match_mat)] <- ""
 
   # use c++ helper function to parse
   parsed <- strip_helper(match_mat,
