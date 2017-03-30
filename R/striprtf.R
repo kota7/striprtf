@@ -119,4 +119,3 @@ strip_rtf <- function(text, verbose = FALSE)
 
 
 
-

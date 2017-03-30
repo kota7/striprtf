@@ -19,9 +19,9 @@ devtools::install_github("kota7/striprtf")
 Usage
 -----
 
-The package exports only two functions:
+The package exports two functions:
 
--   `read_rtf` takes a path to an Rich Text Format (RTF) file and extracts plain text out of it.
+-   `read_rtf` takes a file path to a Rich Text Format (RTF) file and extracts plain text out of it.
 -   `strip_rtf` does the same by with string input instead of file path.
 
 ``` r
@@ -68,7 +68,15 @@ read_rtf(system.file("extdata/mean.rtf", package = "striprtf"))
 #> [5] ""
 ```
 
+Change in the Function Names
+----------------------------
+
+From ver 0.3.1, the functions are renamed as follows:
+
+-   `striprtf` --&gt; `read_rtf`
+-   `rtf2text` --&gt; `strip_rtf`
+
 References
 ----------
 
-The algorithm employed has been mainly discussed in a stack overflow thread (<http://stackoverflow.com/a/188877>) and later refactored and implemented by Gilson Filho for python 3 (<https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676>).
+The algorithm employed in this package has been mainly from discussion in a stack overflow thread (<http://stackoverflow.com/a/188877>) and later refactored and implemented by Gilson Filho for python 3 (<https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676>).
