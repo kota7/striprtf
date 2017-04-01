@@ -21,10 +21,13 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-This package is currently not on CRAN.
+This package is now on CRAN.
 
+```R
+install.packages("striprtf")
+```
 
-Install development version from Github using `devtools` library.
+Alternatively, install development version from Github using `devtools` library.
 ```R
 devtools::install_github("kota7/striprtf")
 ```

@@ -8,9 +8,13 @@ striprtf: Extract Text from RTF (Rich Text Format) File
 Installation
 ------------
 
-This package is currently not on CRAN.
+This package is now on CRAN.
 
-Install development version from Github using `devtools` library.
+``` r
+install.packages("striprtf")
+```
+
+Alternatively, install development version from Github using `devtools` library.
 
 ``` r
 devtools::install_github("kota7/striprtf")
