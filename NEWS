@@ -1,0 +1,16 @@
+striprtf v0.3.2 (Release date: 2017-04-01)
+==============
+
+* Bug fix in `strip_rtf`
+
+
+
+
+striprtf v0.3.1 (Release date: 2017-03-30)
+==============
+
+* The functions are renamed as follows:
+
+  - `striprtf` --> `read_rtf`
+  - `rtf2text` --> `strip_rtf`
+

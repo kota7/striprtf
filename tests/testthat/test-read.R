@@ -1,28 +1,28 @@
 library(testthat)
 library(striprtf)
 
-context("STRIP RTF")
+context("READ RTF")
 
 # for debugging
 #setwd("tests/testthat/")
 
 
 test_that("basic", {
-  x <- readLines("msword.rtf", warn = FALSE) %>% strip_rtf()
+  x <- read_rtf("msword.rtf")
   check <- "This is a test file." %in% x
   expect_true(check)
 })
 
 
 test_that("big", {
-  x <- readLines("big.rtf", warn = FALSE) %>% strip_rtf()
+  x <- read_rtf("big.rtf")
   check <- sum(x == "THIS IS A MUCH BIGGER FILE")
   expect_true(check == 360L)
 })
 
 
 test_that("libre", {
-  x <- readLines("libre.rtf", warn = FALSE) %>% strip_rtf()
+  x <- read_rtf("libre.rtf")
   ans <- readLines("libre.ans", encoding = "UTF-8")
   check <- lapply(ans, function(a) which(x == a))
   len <- lapply(check, length) %>% unlist()
@@ -32,7 +32,7 @@ test_that("libre", {
 
 
 test_that("abiword", {
-  x <- readLines("abiword.rtf", warn = FALSE) %>% strip_rtf()
+  x <- read_rtf("abiword.rtf")
   ans <- readLines("abiword.ans", encoding = "UTF-8")
   check <- lapply(ans, function(a) which(x == a))
   len <- lapply(check, length) %>% unlist()
@@ -42,7 +42,7 @@ test_that("abiword", {
 
 
 test_that("Japanese (cp932)", {
-  x <- readLines("cp932.rtf", warn = FALSE) %>% strip_rtf()
+  x <- read_rtf("cp932.rtf")
   ans <- readLines("cp932.ans", encoding = "UTF-8")
   check <- lapply(ans, function(a) which(x == a))
   len <- lapply(check, length) %>% unlist()
@@ -52,7 +52,7 @@ test_that("Japanese (cp932)", {
 
 
 test_that("Chinese and Korean", {
-  x <- readLines("eastasia.rtf", warn = FALSE) %>% strip_rtf()
+  x <- read_rtf("eastasia.rtf")
   ans <- readLines("eastasia.ans", encoding = "UTF-8")
   check <- lapply(ans, function(a) which(x == a))
   len <- lapply(check, length) %>% unlist()
@@ -62,7 +62,7 @@ test_that("Chinese and Korean", {
 
 
 test_that("Europe", {
-  x <- readLines("europe.rtf", warn = FALSE) %>% strip_rtf()
+  x <- read_rtf("europe.rtf")
   ans <- readLines("europe.ans", encoding = "UTF-8")
   #TBA...
   #check <- lapply(ans, function(a) which(x == a))
