@@ -68,7 +68,7 @@ strip_rtf <- function(text, verbose = FALSE)
   }
 
   # if text has more than 1 length, collapse
-  if (length(text) > 1) text <- paste0(text, collapse = "character")
+  if (length(text) > 1) text <- paste0(text, collapse = "\n")
 
 
   # obtain code page
