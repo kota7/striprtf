@@ -23,10 +23,10 @@ devtools::install_github("kota7/striprtf")
 Usage
 -----
 
-The package exports two functions:
+The package exports two main functions:
 
--   `read_rtf` takes a file path to a Rich Text Format (RTF) file and extracts plain text out of it.
--   `strip_rtf` does the same by with string input instead of file path.
+-   `read_rtf` takes a path to a Rich Text Format (RTF) file and extracts plain text out of it.
+-   `strip_rtf` does the same with string input instead of file path.
 
 ``` r
 library(striprtf)
@@ -65,22 +65,24 @@ read_rtf(system.file("extdata/amenimo.rtf", package = "striprtf"))
 #> [37] "南無浄行菩薩"                     "南無安立行菩薩"                  
 #> [39] ""                                 ""
 read_rtf(system.file("extdata/mean.rtf", package = "striprtf"))
-#> [1] "詩曰：「衣錦尚絅」，惡其文之著也。故君子之道，闇然而日章；小人之道，的然而日亡。君子之道，淡而不厭，簡而文，<U+6EAB>而理，知遠之近，知風之自，知微之顯，可與入德矣。"
+#> [1] "詩曰：「衣錦尚絅」，惡其文之著也。故君子之道，闇然而日章；小人之道，的然而日亡。君子之道，淡而不厭，簡而文，溫而理，知遠之近，知風之自，知微之顯，可與入德矣。"
 #> [2] ""                                                                                                                                                              
 #> [3] "『中庸』　Doctrine of the Mean"                                                                                                                                
 #> [4] ""                                                                                                                                                              
 #> [5] ""
 ```
 
-Change in the Function Names
-----------------------------
+Important Change in the Function Names
+--------------------------------------
 
 From ver 0.3.1, the functions are renamed as follows:
 
 -   `striprtf` --&gt; `read_rtf`
 -   `rtf2text` --&gt; `strip_rtf`
 
+See NEWS for other updates.
+
 References
 ----------
 
-The algorithm employed in this package has been mainly from discussion in a stack overflow thread (<http://stackoverflow.com/a/188877>) and later refactored and implemented by Gilson Filho for python 3 (<https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676>).
+This package implements the algorithm suggested in a stack overflow thread (<http://stackoverflow.com/a/188877>) and later refactored and implemented by Gilson Filho for python 3 (<https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676>).
