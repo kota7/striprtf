@@ -5,9 +5,11 @@
 \alias{strip_rtf}
 \title{Extract Text from RTF (Rich Text Format) File}
 \usage{
-read_rtf(file, verbose = FALSE, ...)
+read_rtf(file, verbose = FALSE, row_start = "*| ", row_end = " |\\n",
+  cell_end = " | ", ...)
 
-strip_rtf(text, verbose = FALSE)
+strip_rtf(text, verbose = FALSE, row_start = "*| ", row_end = "",
+  cell_end = " | ")
 }
 \arguments{
 \item{file}{Path to an RTF file. Must be character of length 1.}
@@ -15,6 +17,10 @@ strip_rtf(text, verbose = FALSE)
 \item{verbose}{Logical. If TRUE, progress report is printed on console.
 While it can be informative when parsing a large file,
 this option itself makes the process slow.}
+
+\item{row_start, row_end}{strings to be added at the beginning and end of table rows}
+
+\item{cell_end}{strings to be put at the end of table cells}
 
 \item{...}{Addional arguments passed to \code{\link{readLines}}}
 
@@ -43,9 +49,9 @@ An advance from the preceding implementation is that the function
 accomodates with various ANSI code pages.  For example, RTF files created
 by Japanese version of Microsoft Word marks \code{\\ansicpg932}, which indicates
 the code page 932 is used for letter-code conversion.
-The function detect the code page indication and
+The function detects the code page indication and
 convert them to UTF-8 as possible.  Conversion table is retrieved from
-here (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
+here: (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
 }
 \examples{
 read_rtf(system.file("extdata/king.rtf", package = "striprtf"))

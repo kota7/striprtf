@@ -15,7 +15,8 @@ Depends:
 Imports:
     magrittr,
     Rcpp,
-    stringr
+    stringr,
+    utils
 Suggests:
     testthat
 RoxygenNote: 5.0.1
