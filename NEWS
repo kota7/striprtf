@@ -1,3 +1,22 @@
+striprtf v0.4.1 (Release date: 2017-05-14)
+==============
+
+* Special treatment for tables
+
+  `read_rtf` (and `strip_rtf`) has new options `row_start`, `row_end`, and `cell_end`,
+  which specifies strings to put at the correponding parts of tables.
+  For example, suppose there is a table like below in a RTF document:
+
+  | A  | B | C |
+  | ------------- | ------------- | ------------- |
+  | 1.01 | 2.02 | 3. 03|
+
+  In this version, `read_rtf("table.rtf", row_start="**", row_end="**", cell_end="\t")` would return:
+  `"**A\tB\tC\t**"          "**1.01\t2.02\t3.03\t**" ""`
+
+  For a backward compatibility, there is an option `ignore_tables`; Set it `FALSE` to obtain the same behavior as previous version.
+
+
 striprtf v0.3.2 (Release date: 2017-04-01)
 ==============
 
