@@ -80,11 +80,22 @@
 .specialchars <- list(
   keys = c("bullet", "emdash", "emspace", "endash", "enspace",
            "ldblquote", "line", "lquote", "page", "par",
-           "qmspace", "rdblquote", "rquote", "sect", "tab"),
+           "qmspace", "rdblquote", "rquote", "sect", "tab",
+           # table controls.
+           # - \trowd... begining or row
+           # - \row  ... end of each row
+           # - \cell ... end of each cell
+           "trowd", "row", "cell"),
   hexstr = c("x2022", "x2014", "x2003", "x2013", "x2002",
              "x201C", "x000A", "xu2018", "x000Ax000A", "x000A",
-             "x2005", "x201D", "x2019", "x000Ax000A", "x0009"),
+             "x2005", "x201D", "x2019", "x000Ax000A", "x0009",
+             "x007c", "x000A", "x0009"),
   str = c("\u2022", "\u2014", "\u2003", "\u2013", "\u2002",
           "\201C", "\n", "\u2018", "\n\n", "\n",
-          "\u2005", "\u201D", "\u2019",  "\n\n", "\t")
+          "\u2005", "\u201D", "\u2019",  "\n\n", "\t",
+          "|", "\n", "\t")
 )
+
+# c++ code requires that key is increasing
+.specialchars <- lapply(.specialchars, `[`, order(.specialchars$key))
+
