@@ -17,6 +17,9 @@ test_that("basic table", {
   expect_equal(length(i2), 1)
   # and they must be side by side
   expect_equal(i2-i1, 1)
+
+  x <- read_rtf("table.rtf", ignore_tables=TRUE)
+  expect_true(grepl("ABC1.012.023.03", x))
 })
 
 
@@ -31,5 +34,23 @@ test_that("table with special chars", {
   expect_equal(length(i2), 1)
   # and they must be side by side
   expect_equal(i2-i1, 1)
+})
+
+
+
+
+test_that("multiple tables", {
+  x <- read_rtf("table-multi.rtf", row_start="*|")
+
+  i <- grep("*|", x, fixed=TRUE)
+  expect_equal(length(i), 7)
+
+  # there are two tables, one with 3 rows, the other with 4 rows
+  # to check this, use diff(i) and count the number of diff=1 cases
+  expect_equal(sum(diff(i)==1), 5)
+
+  x <- read_rtf("table-multi.rtf", ignore_tables=TRUE)
+  expect_true("123456" %in% x)
+  expect_true("abcdefghijkl" %in% x)
 })
 

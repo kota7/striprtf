@@ -14,7 +14,9 @@ striprtf v0.4.1 (Release date: 2017-05-14)
   In this version, `read_rtf("table.rtf", row_start="**", row_end="**", cell_end="\t")` would return:
   `"**A\tB\tC\t**"          "**1.01\t2.02\t3.03\t**" ""`
 
-  For a backward compatibility, there is an option `ignore_tables`; Set it `FALSE` to obtain the same behavior as previous version.
+  Note that there is `\t` is put the end of each cell, not only between cells.
+
+  For a backward compatibility, there is an option `ignore_tables`; Set it `TRUE` to obtain the same behavior as previous version.
 
 
 striprtf v0.3.2 (Release date: 2017-04-01)

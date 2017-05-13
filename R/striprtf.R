@@ -7,6 +7,7 @@
 #' this option itself makes the process slow.
 #' @param row_start,row_end strings to be added at the beginning and end of table rows
 #' @param cell_end strings to be put at the end of table cells
+#' @param ignore_tables if \code{TRUE}, no special treatment for tables
 #' @param ... Addional arguments passed to \code{\link{readLines}}
 #' @return Character vector of extracted text
 #' @export
@@ -38,7 +39,7 @@
 #' here: (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
 #'
 read_rtf <- function(file, verbose = FALSE,
-                     row_start = '*| ', row_end = ' |\n', cell_end = " | ",
+                     row_start = "*| ", row_end = "", cell_end = " | ", ignore_tables=FALSE,
                      ...)
 {
   stopifnot(is.character(file))
@@ -46,7 +47,7 @@ read_rtf <- function(file, verbose = FALSE,
 
   readLines(file, warn = FALSE, ...) %>%
     paste0(collapse = "\n") %>%
-    strip_rtf(verbose, row_start, row_end, cell_end)
+    strip_rtf(verbose, row_start, row_end, cell_end, ignore_tables)
 }
 
 
@@ -62,7 +63,7 @@ read_rtf <- function(file, verbose = FALSE,
 #' @param text  Character of length 1.  Expected to be contents of an RTF file.
 #' @export
 strip_rtf <- function(text, verbose = FALSE,
-                      row_start = "*| ", row_end = "", cell_end = " | ")
+                      row_start = "*| ", row_end = "", cell_end = " | ", ignore_tables=FALSE)
 {
   stopifnot(is.character(text))
   stopifnot(is.logical(verbose))
@@ -135,6 +136,12 @@ strip_rtf <- function(text, verbose = FALSE,
   # check if table keys exists
   # if there is none, then split by line breaks and return
   if (!grepl(sprintf('[%s]', intToUtf8(tmp_rep)), out)) return(strsplit(out, "\n") %>% unlist())
+
+  # ignore tables option --> all temporary letters are to be replaced by "" and return
+  if (ignore_tables) {
+    out <- gsub(sprintf('[%s]', intToUtf8(tmp_rep)), '', out)
+    return(strsplit(out, "\n") %>% unlist())
+  }
 
   # formatting tables
   regx <- sprintf("[^%s]+", paste0(intToUtf8(tmp_rep[c(1,4)])))

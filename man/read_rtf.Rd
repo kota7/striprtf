@@ -5,11 +5,11 @@
 \alias{strip_rtf}
 \title{Extract Text from RTF (Rich Text Format) File}
 \usage{
-read_rtf(file, verbose = FALSE, row_start = "*| ", row_end = " |\\n",
-  cell_end = " | ", ...)
+read_rtf(file, verbose = FALSE, row_start = "*| ", row_end = "",
+  cell_end = " | ", ignore_tables = FALSE, ...)
 
 strip_rtf(text, verbose = FALSE, row_start = "*| ", row_end = "",
-  cell_end = " | ")
+  cell_end = " | ", ignore_tables = FALSE)
 }
 \arguments{
 \item{file}{Path to an RTF file. Must be character of length 1.}
@@ -21,6 +21,8 @@ this option itself makes the process slow.}
 \item{row_start, row_end}{strings to be added at the beginning and end of table rows}
 
 \item{cell_end}{strings to be put at the end of table cells}
+
+\item{ignore_tables}{if \code{TRUE}, no special treatment for tables}
 
 \item{...}{Addional arguments passed to \code{\link{readLines}}}
 
