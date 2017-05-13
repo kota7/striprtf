@@ -22,9 +22,9 @@
 #' Microsoft.
 #' This function interprets the character strings and extracts plain texts of
 #' the file.
-#' Major part of the algorithm this function employs has been discussed in a
-#' stack overflow thread (\url{http://stackoverflow.com/a/188877}) and later
-#' refactored and implemented by Gilson Filho for python 3
+#' Major part of the algorithm of this function comes from a
+#' stack overflow thread (\url{http://stackoverflow.com/a/188877}) and
+#' the implemented by Gilson Filho for python 3
 #' (\url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}).
 #' The function is a translation of the above codes to R language,
 #' associated with C++ codes for enhancement.
