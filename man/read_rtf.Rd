@@ -5,9 +5,11 @@
 \alias{strip_rtf}
 \title{Extract Text from RTF (Rich Text Format) File}
 \usage{
-read_rtf(file, verbose = FALSE, ...)
+read_rtf(file, verbose = FALSE, row_start = "*| ", row_end = " |\\n",
+  cell_end = " | ", ...)
 
-strip_rtf(text, verbose = FALSE)
+strip_rtf(text, verbose = FALSE, row_start = "*| ", row_end = "",
+  cell_end = " | ")
 }
 \arguments{
 \item{file}{Path to an RTF file. Must be character of length 1.}
@@ -15,6 +17,10 @@ strip_rtf(text, verbose = FALSE)
 \item{verbose}{Logical. If TRUE, progress report is printed on console.
 While it can be informative when parsing a large file,
 this option itself makes the process slow.}
+
+\item{row_start, row_end}{strings to be added at the beginning and end of table rows}
+
+\item{cell_end}{strings to be put at the end of table cells}
 
 \item{...}{Addional arguments passed to \code{\link{readLines}}}
 
@@ -32,9 +38,9 @@ consisting of ASCII characters.  The specification has been developed by
 Microsoft.
 This function interprets the character strings and extracts plain texts of
 the file.
-Major part of the algorithm this function employs has been discussed in a
-stack overflow thread (\url{http://stackoverflow.com/a/188877}) and later
-refactored and implemented by Gilson Filho for python 3
+Major part of the algorithm of this function comes from a
+stack overflow thread (\url{http://stackoverflow.com/a/188877}) and
+the implemented by Gilson Filho for python 3
 (\url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}).
 The function is a translation of the above codes to R language,
 associated with C++ codes for enhancement.
@@ -43,9 +49,9 @@ An advance from the preceding implementation is that the function
 accomodates with various ANSI code pages.  For example, RTF files created
 by Japanese version of Microsoft Word marks \code{\\ansicpg932}, which indicates
 the code page 932 is used for letter-code conversion.
-The function detect the code page indication and
+The function detects the code page indication and
 convert them to UTF-8 as possible.  Conversion table is retrieved from
-here (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
+here: (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
 }
 \examples{
 read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
