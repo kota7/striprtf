@@ -96,6 +96,20 @@ strip_rtf <- function(text, verbose = FALSE,
   match_mat[is.na(match_mat)] <- ""
 
 
+  # strategy (development note)
+  # - pick temporary replacement for each. these must not conflict with the documents,
+  #   specified `row_start`, `row_end`, `cell_end`,
+  #   or any other letters used in the process (handled by `unused_letters` function).
+  #   "trowd" and "row" gets replacement of length 2, "cell" length 1
+  # - later, after concatenating the whole document as a single character,
+  #   search for the expression not including
+  #   "the first letter of throwd replacement" nor "the second letter of row replacement".
+  #     note: fail if nested tables (which perhaps is not supported by RTF?)
+  #     note: fail if merged cells (supported by RTF?)
+  # - now, table rows can be identified since they have "the second letter of throwd replacement"
+  #   do appropriate conversion to `row_start`, `row_end`, and `cell_end` arguments.
+  #   this is safe since we picked the replacement not to conflict.
+
   # edit hexstr for table related keys, "trowd", "row", "cell"
   tmp_rep <- unused_letters(c(text, row_start, row_end, cell_end), 5, as_number=TRUE)
   keys   <- .specialchars$keys
