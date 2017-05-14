@@ -128,13 +128,12 @@ strip_rtf <- function(text, verbose = FALSE,
                          verbose = verbose)
   #print(parsed)
 
-  print(parsed$strcode)
-  print(class(parsed$strcode))
-  print(length(parsed$strcode))
-  out <- strsplit(parsed$strcode, "x") %>%
-    lapply(as.hexmode) %>%
-    lapply(intToUtf8)
+  #print(parsed$intcode)
+  # out <- strsplit(parsed$strcode, "x") %>%
+  #   lapply(as.hexmode) %>%
+  #   lapply(intToUtf8)
   #print(out)
+  out <- lapply(parsed$intcode, intToUtf8)
 
   # code page translation
   if (!is.na(cpname)) {
