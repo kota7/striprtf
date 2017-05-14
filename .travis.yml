@@ -6,10 +6,15 @@ cache: packages
 r:
   - oldrel
   - release
-  #- devel  
-  #... osx misses some key dependencies 
-  #    missing: magrittr, Rcpp, stringr
-
+  - devel  
+  
 os:
   - linux
   - osx
+
+matrix:
+  exlude:
+  - r: devel
+    os: osx
+#... osx misses some key dependencies 
+#    missing: magrittr, Rcpp, stringr
