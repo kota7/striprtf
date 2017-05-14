@@ -13,7 +13,7 @@ os:
   - osx
 
 matrix:
-  exlude:
+  exclude:
   - r: devel
     os: osx
 #... osx misses some key dependencies 
