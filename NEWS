@@ -4,7 +4,7 @@ striprtf v0.4.1 (Release date: 2017-05-14)
 * Special treatment for tables
 
   `read_rtf` (and `strip_rtf`) has new options `row_start`, `row_end`, and `cell_end`,
-  which specifies strings to put at the correponding parts of tables.
+  which specify strings to put at the correponding parts of tables.
   For example, suppose there is a table like below in a RTF document:
 
   | A  | B | C |
@@ -14,9 +14,15 @@ striprtf v0.4.1 (Release date: 2017-05-14)
   In this version, `read_rtf("table.rtf", row_start="**", row_end="**", cell_end="\t")` would return:
   `"**A\tB\tC\t**"          "**1.01\t2.02\t3.03\t**" ""`
 
-  Note that there is `\t` is put the end of each cell, not only between cells.
+  Note that `\t` is put at the end of each cell, not only between cells.
+  
+  Supports line breaks within cells.
+  No support for merged cells.
+  No support for nested tables (i.e. tables within tables).
+  
+  
 
-  For a backward compatibility, there is an option `ignore_tables`; Set it `TRUE` to obtain the same behavior as previous version.
+  For backward compatibility, there is an option `ignore_tables`; Set it `TRUE` to obtain the same behavior as the previous version.
 
 
 striprtf v0.3.2 (Release date: 2017-04-01)
