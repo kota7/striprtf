@@ -8,7 +8,7 @@ r:
   - release
   #- devel  
   #... osx misses some key dependencies 
-  #missing: magrittr, Rcpp, stringr
+  #    missing: magrittr, Rcpp, stringr
 
 os:
   - linux
