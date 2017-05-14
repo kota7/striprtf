@@ -30,7 +30,56 @@ std::string to_hexstr(int x, int pad)
 }
 
 
+IntegerVector hex_to_int(std::string h, char sep)
+{
+  // convert hex string into integer vector
+  //
+  // args:
+  //   h:   hex string in the form e.g., x000AxCA01 ...
+  //   sep: char separating codes in h, if x001Ax0408, ..., then 'x'
+  //
+  // returns:
+  //   integer vector
+
+  h += sep; // make sure the last hex is read
+
+  IntegerVector out;
+  bool started = false;
+  for (int i = 0; i < h.size(); i++)
+  {
+    int start;
+    if (h[i] == sep) {
+      if (!started) {
+        start = i + 1;
+        started = true;
+      } else {
+        int end = i;
+
+        int tmp = 0;
+        for (int k = end-1; k >= start; k--)
+        {
+          char c = h[k];
+          int n;
+          if (c >= '0' && c <= '9')      n = c - '0';
+          else if (c >= 'A' && c <= 'F') n = c - 'A' + 10;
+          else if (c >= 'a' && c <= 'f') n = c - 'a' + 10;
+          else stop("invalid hex");
+
+          tmp += pow(16, end-1-k) * n;
+        }
+        out.push_back(tmp);
+        start = i + 1;
+      }
+    }
+  }
+  return out;
+}
+
 
 /*** R
 striprtf:::to_hexstr(50)
+
+h <- "xffffx0101x00a0"
+striprtf:::hex_to_int(h)
+as.integer(as.hexmode(strsplit(h, 'x')[[1]]))[-1]  # should produce same result
 */

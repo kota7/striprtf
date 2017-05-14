@@ -17,6 +17,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// hex_to_int
+IntegerVector hex_to_int(std::string h, char sep);
+RcppExport SEXP striprtf_hex_to_int(SEXP hSEXP, SEXP sepSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type h(hSEXP);
+    Rcpp::traits::input_parameter< char >::type sep(sepSEXP);
+    rcpp_result_gen = Rcpp::wrap(hex_to_int(h, sep));
+    return rcpp_result_gen;
+END_RCPP
+}
 // strip_helper
 List strip_helper(CharacterMatrix match_mat, CharacterVector dest_names, CharacterVector special_keys, CharacterVector special_hex, bool verbose);
 RcppExport SEXP striprtf_strip_helper(SEXP match_matSEXP, SEXP dest_namesSEXP, SEXP special_keysSEXP, SEXP special_hexSEXP, SEXP verboseSEXP) {
