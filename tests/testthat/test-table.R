@@ -27,7 +27,7 @@ test_that("table with special chars", {
   x <- read_rtf("table-specialchars.rtf", row_start = "<tr>", row_end = "</tr>", cell_end = ",")
 
   i1 <- grep("<tr>a\tb\tc,d\ne\nf,h,i,j,</tr>", x, fixed=TRUE)
-  i2 <- grep("<tr>k l m ,“foo”,‘bar’,</tr>" , x, fixed=TRUE)
+  i2 <- grep("<tr>k l m ,\u201cfoo\u201d,‘bar’,</tr>", x, fixed=TRUE)
 
   # both must appear exatly once
   expect_equal(length(i1), 1)
