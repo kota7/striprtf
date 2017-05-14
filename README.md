@@ -82,6 +82,24 @@ From ver 0.3.1, the functions are renamed as follows:
 
 See NEWS for other updates.
 
+Table Support (v0.4.1+)
+-----------------------
+
+Supports tables in documents. Use `row_start`, `row_end`, `cell_end` arguments to adjust the format the tables. Suppports line breaks (and other special characters) within cells.
+
+``` r
+# example file added at v0.4.2
+read_rtf(system.file("extdata/shakespear.rtf", package = "striprtf"),
+         row_start = "**", row_end = "", cell_end = " --- ")
+#> [1] "Shakespeare quotes"                                                                                                                                           
+#> [2] ""                                                                                                                                                             
+#> [3] "**The Tempest --- ﻿We are such stuff as dreams are made on, \nand our little life is rounded with a sleep. --- "                                               
+#> [4] "**Hamlet --- ﻿There is nothing either good or bad, \nbut thinking makes it so. --- "                                                                           
+#> [5] "**Rome and Juliet --- ﻿Swear not by the moon, the inconstant moon,\nThat monthly changes in her circled orb,\nLest that thy love prove likewise variable. --- "
+#> [6] ""                                                                                                                                                             
+#> [7] ""
+```
+
 References
 ----------
 

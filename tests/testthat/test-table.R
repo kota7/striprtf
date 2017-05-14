@@ -1,7 +1,7 @@
 library(testthat)
 library(striprtf)
 
-context("TABLE IN RTF")
+context("TABLES")
 
 # for debugging
 #setwd("tests/testthat/")
@@ -52,5 +52,23 @@ test_that("multiple tables", {
   x <- read_rtf("table-multi.rtf", ignore_tables=TRUE)
   expect_true("123456" %in% x)
   expect_true("abcdefghijkl" %in% x)
+})
+
+
+
+
+test_that("big file with many tables", {
+  x <- read_rtf("big-with-table.rtf", row_start="***")
+
+  i <- grep("***", x, fixed=TRUE)
+  expect_equal(length(i), 8)
+
+  # there are two tables, one with 3 rows, the other with 4 rows
+  # to check this, use diff(i) and count the number of diff=1 cases
+  expect_equal(sum(diff(i)==1), 4)
+
+  x <- read_rtf("big-with-table.rtf", ignore_tables=TRUE)
+  i <- grep("abcdefghij", x)
+  expect_equal(length(i), 4)
 })
 

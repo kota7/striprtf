@@ -63,6 +63,17 @@ From ver 0.3.1, the functions are renamed as follows:
 See NEWS for other updates.
 
 
+## Table Support (v0.4.1+)
+
+Supports tables in documents.  Use `row_start`, `row_end`, `cell_end` arguments
+to adjust the format the tables.
+Suppports line breaks (and other special characters) within cells.
+```{r}
+# example file added at v0.4.2
+read_rtf(system.file("extdata/shakespear.rtf", package = "striprtf"),
+         row_start = "**", row_end = "", cell_end = " --- ")
+```
+
 ## References
 
 This package implements the algorithm suggested in a stack overflow thread
