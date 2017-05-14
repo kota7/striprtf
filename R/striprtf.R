@@ -6,7 +6,7 @@
 #' While it can be informative when parsing a large file,
 #' this option itself makes the process slow.
 #' @param row_start,row_end strings to be added at the beginning and end of table rows
-#' @param cell_end strings to be put at the end of table cells
+#' @param cell_end string to be put at the end of table cells
 #' @param ignore_tables if \code{TRUE}, no special treatment for tables
 #' @param ... Addional arguments passed to \code{\link{readLines}}
 #' @return Character vector of extracted text
@@ -128,6 +128,9 @@ strip_rtf <- function(text, verbose = FALSE,
                          verbose = verbose)
   #print(parsed)
 
+  print(parsed$strcode)
+  print(class(parsed$strcode))
+  print(length(parsed$strcode))
   out <- strsplit(parsed$strcode, "x") %>%
     lapply(as.hexmode) %>%
     lapply(intToUtf8)

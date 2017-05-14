@@ -20,7 +20,7 @@ this option itself makes the process slow.}
 
 \item{row_start, row_end}{strings to be added at the beginning and end of table rows}
 
-\item{cell_end}{strings to be put at the end of table cells}
+\item{cell_end}{string to be put at the end of table cells}
 
 \item{ignore_tables}{if \code{TRUE}, no special treatment for tables}
 
