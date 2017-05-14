@@ -1,3 +1,12 @@
+striprtf v0.4.2 (Release date: 2017-05-14)
+==============
+
+* added an example file
+
+  - shakespeare.rtf
+
+
+
 striprtf v0.4.1 (Release date: 2017-05-14)
 ==============
 
@@ -15,12 +24,12 @@ striprtf v0.4.1 (Release date: 2017-05-14)
   `"**A\tB\tC\t**"          "**1.01\t2.02\t3.03\t**" ""`
 
   Note that `\t` is put at the end of each cell, not only between cells.
-  
+
   Supports line breaks within cells.
   No support for merged cells.
   No support for nested tables (i.e. tables within tables).
-  
-  
+
+
 
   For backward compatibility, there is an option `ignore_tables`; Set it `TRUE` to obtain the same behavior as the previous version.
 
