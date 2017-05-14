@@ -1,10 +1,15 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
+cache: packages
+
 r:
   - oldrel
   - release
-  - devel
+  - devel  
+  #... osx misses some key dependencies 
+  #missing: magrittr, Rcpp, stringr
+
 os:
   - linux
   - osx
