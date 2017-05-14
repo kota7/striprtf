@@ -5,7 +5,6 @@ Version: 0.4.2
 Authors@R: c(
     person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
   )
-Maintainer: Kota Mori <kmori05@gmail.com>
 Description:
     Extracts plain text from RTF (Rich Text Format) file.
 License: MIT + file LICENSE
