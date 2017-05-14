@@ -1,3 +1,10 @@
+striprtf v0.4.3 (Release date: 2017-05-14)
+==============
+
+* fixed hexmode errors on OS X
+
+
+
 striprtf v0.4.2 (Release date: 2017-05-14)
 ==============
 
