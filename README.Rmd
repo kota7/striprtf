@@ -70,7 +70,7 @@ to adjust the format the tables.
 Suppports line breaks (and other special characters) within cells.
 ```{r}
 # example file added at v0.4.2
-read_rtf(system.file("extdata/shakespear.rtf", package = "striprtf"),
+read_rtf(system.file("extdata/shakespeare.rtf", package = "striprtf"),
          row_start = "**", row_end = "", cell_end = " --- ")
 ```
 

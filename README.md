@@ -89,15 +89,17 @@ Supports tables in documents. Use `row_start`, `row_end`, `cell_end` arguments t
 
 ``` r
 # example file added at v0.4.2
-read_rtf(system.file("extdata/shakespear.rtf", package = "striprtf"),
+read_rtf(system.file("extdata/shakespeare.rtf", package = "striprtf"),
          row_start = "**", row_end = "", cell_end = " --- ")
-#> [1] "Shakespeare quotes"                                                                                                                                           
-#> [2] ""                                                                                                                                                             
-#> [3] "**The Tempest --- ﻿We are such stuff as dreams are made on, \nand our little life is rounded with a sleep. --- "                                               
-#> [4] "**Hamlet --- ﻿There is nothing either good or bad, \nbut thinking makes it so. --- "                                                                           
-#> [5] "**Rome and Juliet --- ﻿Swear not by the moon, the inconstant moon,\nThat monthly changes in her circled orb,\nLest that thy love prove likewise variable. --- "
-#> [6] ""                                                                                                                                                             
-#> [7] ""
+#> [1] "Shakespeare quotes"                                                                                                                                            
+#> [2] ""                                                                                                                                                              
+#> [3] "**The Tempest --- ﻿We are such stuff as dreams are made on, \nand our little life is rounded with a sleep. --- "                                                
+#> [4] "**Hamlet --- ﻿There is nothing either good or bad, \nbut thinking makes it so. --- "                                                                            
+#> [5] "**Romeo and Juliet --- ﻿Swear not by the moon, the inconstant moon,\nThat monthly changes in her circled orb,\nLest that thy love prove likewise variable. --- "
+#> [6] ""                                                                                                                                                              
+#> [7] ""                                                                                                                                                              
+#> [8] ""                                                                                                                                                              
+#> [9] ""
 ```
 
 References
