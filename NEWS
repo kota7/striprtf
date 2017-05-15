@@ -1,3 +1,11 @@
+striprtf v0.4.4 (Release date: 2017-05-15)
+==============
+
+* fixed ambiguity in `pow` function in C++ code
+
+
+
+
 striprtf v0.4.3 (Release date: 2017-05-14)
 ==============
 

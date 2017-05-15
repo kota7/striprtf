@@ -56,6 +56,7 @@ IntegerVector hex_to_int(std::string h, char sep)
         int end = i;
 
         int tmp = 0;
+        int base = 1;
         for (int k = end-1; k >= start; k--)
         {
           char c = h[k];
@@ -65,7 +66,8 @@ IntegerVector hex_to_int(std::string h, char sep)
           else if (c >= 'a' && c <= 'f') n = c - 'a' + 10;
           else stop("invalid hex");
 
-          tmp += pow(16, end-1-k) * n;
+          tmp += base*n;
+          base *= 16;
         }
         out.push_back(tmp);
         start = i + 1;
