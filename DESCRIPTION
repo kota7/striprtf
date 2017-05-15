@@ -5,8 +5,7 @@ Version: 0.4.3
 Authors@R: c(
     person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
   )
-Description:
-    Extracts plain text from RTF (Rich Text Format) file.
+Description: Extracts plain text from RTF (Rich Text Format) file.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends:
@@ -18,7 +17,7 @@ Imports:
     utils
 Suggests:
     testthat
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1
 LinkingTo: Rcpp
 URL: https://github.com/kota7/striprtf
 BugReports: https://github.com/kota7/striprtf/issues

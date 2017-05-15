@@ -65,3 +65,4 @@ read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
  \item{Code page table: \url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}}
 }
 }
+

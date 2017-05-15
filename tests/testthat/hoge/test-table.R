@@ -19,7 +19,7 @@ test_that("basic table", {
   expect_equal(i2-i1, 1)
 
   x <- read_rtf("table.rtf", ignore_tables=TRUE)
-  expect_true(grepl("ABC1.012.023.03", x, fixed=TRUE))
+  expect_true(grepl("ABC1.012.023.03", x))
 })
 
 
@@ -27,7 +27,7 @@ test_that("table with special chars", {
   x <- read_rtf("table-specialchars.rtf", row_start = "<tr>", row_end = "</tr>", cell_end = ",")
 
   i1 <- grep("<tr>a\tb\tc,d\ne\nf,h,i,j,</tr>", x, fixed=TRUE)
-  i2 <- grep("<tr>k l m ,\u201cfoo\u201d,\u2018bar\u2019,</tr>", x, fixed=TRUE)
+  i2 <- grep("<tr>k l m ,\u201cfoo\u201d,‘bar’,</tr>", x, fixed=TRUE)
 
   # both must appear exatly once
   expect_equal(length(i1), 1)
