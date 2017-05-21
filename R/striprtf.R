@@ -148,6 +148,7 @@ strip_rtf <- function(text, verbose = FALSE,
 
   # combine them all to a single long string
   out <- unlist(out) %>% paste0(collapse = "")
+  print(out)
 
   # check if table keys exists
   # if there is none, then split by line breaks and return
