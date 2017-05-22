@@ -147,6 +147,7 @@ strip_rtf <- function(text, verbose = FALSE,
   }
 
   # identify tables
+  ## 1. non-table ... \row ~ \par
   ## 1. table     ... (a) \trowd ~ \row
   ##                  (b) \row ~ \row (since \trowd can be omitted)
   ## 2. non-table ... substring that does not include \trowd or \row
