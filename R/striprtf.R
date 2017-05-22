@@ -148,7 +148,6 @@ strip_rtf <- function(text, verbose = FALSE,
 
   # combine them all to a single long string
   out <- unlist(out) %>% paste0(collapse = "")
-  print(out)
 
   # check if table keys exists
   # if there is none, then split by line breaks and return
@@ -160,23 +159,42 @@ strip_rtf <- function(text, verbose = FALSE,
     return(strsplit(out, "\n") %>% unlist())
   }
 
-  # formatting tables
-  regx <- sprintf("[^%s]+", paste0(intToUtf8(tmp_rep[c(1,4)])))
+  # identify tables
+  ## 1. table     ... (a) \trowd ~ \row
+  ##                  (b) \row ~ \row (since \trowd can be omitted)
+  ## 2. non-table ... substring that does not include \trowd or \row
+  print(out)
+  r1 <- sprintf("[%s][^%s]+%s",
+                paste0(intToUtf8(tmp_rep[c(2,4)]), collapse=""),
+                intToUtf8(tmp_rep[3]),
+                intToUtf8(tmp_rep[3]))
+  r2 <- sprintf("[%s]{0,1}[^%s]+[%s]{0,1}",
+                intToUtf8(tmp_rep[4]),
+                paste0(intToUtf8(tmp_rep[c(1:4)]), collapse=""),
+                intToUtf8(tmp_rep[1]))
+  regx <- sprintf("(%s)|(%s)", r1, r2)
   tmp <- stringr::str_match_all(out, regx)[[1]]
+  print(tmp)
 
-  # where are rows?
-  rows <- (substring(tmp,1,1) == intToUtf8(tmp_rep[2]))
-  # replace temporary letters in table rows to user specified characters
-  tmp[rows] <- tmp[rows] %>%
-    stringr::str_replace_all(intToUtf8(tmp_rep[2]), row_start) %>%
-    stringr::str_replace_all(intToUtf8(tmp_rep[3]), row_end) %>%
-    stringr::str_replace_all(intToUtf8(tmp_rep[5]), cell_end)
+  out <- tmp[,1] # matched strings
+  # where are table rows?
+  table_rows <- !is.na(tmp[,2])
+  # row start and end indicators are not necessary any more
+  regx <- sprintf("[%s]+", paste0(intToUtf8(tmp_rep[1:4]), collapse=""))
+  out <- stringr::str_replace_all(out, regx, "")
+
+  # convert cell end indicators
+  out <- stringr::str_replace_all(out, intToUtf8(tmp_rep[5]), cell_end)
+
+  # add row-start and row-end strings
+  out[table_rows] <- paste(row_start, out[table_rows], row_end, sep="")
+
   # non-table elements are split by line breaks
-  tmp <- as.list(tmp)
-  tmp[!rows] <- lapply(tmp[!rows], strsplit, "\n")
+  out <- as.list(out)
+  out[!table_rows] <- lapply(out[!table_rows], strsplit, "\n")
 
   # unlist will flatten the output
-  unlist(tmp)
+  unlist(out)
 }
 
 
