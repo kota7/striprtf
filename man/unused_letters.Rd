@@ -32,4 +32,3 @@ temporarily converted to another letter without being confused with the same let
 Letters are first searched from \code{\\u0001} upto \code{\\uffff}.
 Do not specify too large \code{n}; An error is raised if a sufficient number of unsed letters are not found.
 }
-

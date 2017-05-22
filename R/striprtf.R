@@ -162,7 +162,7 @@ strip_rtf <- function(text, verbose = FALSE,
                 paste0(intToUtf8(tmp_rep[c(1,6)]), collapse=""))
   regx <- sprintf("(%s)|(%s)", r1, r2)
   tmp <- stringr::str_match_all(out, regx)[[1]]
-  print(tmp)
+  #print(tmp)
 
   out <- tmp[,1] # matched strings
   # where are table rows?
