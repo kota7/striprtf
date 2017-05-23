@@ -97,13 +97,13 @@ strip_rtf <- function(text, verbose = FALSE,
 
 
   tmp_rep <- unused_letters(c(text, row_start, row_end, cell_end),
-                            6, as_number=TRUE)
+                            4, as_number=TRUE)
   keys   <- .specialchars$keys
   hexstr <- .specialchars$hexstr
-  hexstr[keys=="trowd"] <- sprintf("x%04d", tmp_rep[1:2]) %>% paste0(collapse="")
-  hexstr[keys=="row"]   <- sprintf("x%04d", tmp_rep[3:4]) %>% paste0(collapse="")
-  hexstr[keys=="cell"]  <- sprintf("x%04d", tmp_rep[5])
-  hexstr[keys=="par"]   <- sprintf("x%04d", tmp_rep[6])
+  hexstr[keys=="trowd"] <- sprintf("x%04d", tmp_rep[1])
+  hexstr[keys=="row"]   <- sprintf("x%04d", tmp_rep[2])
+  hexstr[keys=="cell"]  <- sprintf("x%04d", tmp_rep[3])
+  hexstr[keys=="par"]   <- sprintf("x%04d", tmp_rep[4])
 
 
 
@@ -147,32 +147,32 @@ strip_rtf <- function(text, verbose = FALSE,
   }
 
   # identify tables
-  ## 1. non-table ... \row ~ \par
-  ## 1. table     ... (a) \trowd ~ \row
-  ##                  (b) \row ~ \row (since \trowd can be omitted)
-  ## 2. non-table ... substring that does not include \trowd or \row
   print(out)
-  r1 <- sprintf("[%s][^%s]+%s",
-                paste0(intToUtf8(tmp_rep[c(2,4)]), collapse=""),
-                intToUtf8(tmp_rep[3]),
-                intToUtf8(tmp_rep[3]))
-  r2 <- sprintf("[%s]{0,1}[^%s]+[%s]{0,1}",
-                intToUtf8(tmp_rep[4]),
-                paste0(intToUtf8(tmp_rep[c(1:4)]), collapse=""),
-                paste0(intToUtf8(tmp_rep[c(1,6)]), collapse=""))
-  regx <- sprintf("(%s)|(%s)", r1, r2)
+  r1a <- sprintf("[%s][^%s]+%s",
+                 intToUtf8(tmp_rep[1]),
+                 intToUtf8(tmp_rep[2]),
+                 intToUtf8(tmp_rep[2]))
+  r1b <- sprintf("[^%s]*%s[^%s]+%s",
+                 paste0(intToUtf8(tmp_rep[c(1,3:4)]), collapse=""),
+                 intToUtf8(tmp_rep[3]),
+                 paste0(intToUtf8(tmp_rep[1:2]), collapse=""),
+                 intToUtf8(tmp_rep[2]))
+  r2 <- sprintf("[^%s]+",
+                paste0(intToUtf8(tmp_rep[c(1,4)]), collapse=""))
+  regx <- sprintf("(%s)|(%s)|(%s)", r1a, r1b, r2)
   tmp <- stringr::str_match_all(out, regx)[[1]]
   #print(tmp)
 
   out <- tmp[,1] # matched strings
   # where are table rows?
-  table_rows <- !is.na(tmp[,2])
+  table_rows <- !is.na(tmp[,2]) | !is.na(tmp[,3])
   # row start and end indicators are not necessary any more
-  regx <- sprintf("[%s]+", paste0(intToUtf8(tmp_rep[1:4]), collapse=""))
+  regx <- sprintf("[%s]+", paste0(intToUtf8(tmp_rep[1:2]), collapse=""))
   out <- stringr::str_replace_all(out, regx, "")
 
-  # convert cell end indicators
-  out <- stringr::str_replace_all(out, intToUtf8(tmp_rep[5]), cell_end)
+  # convert cell end indicators and paragraph switcher
+  out <- stringr::str_replace_all(out, intToUtf8(tmp_rep[3]), cell_end)
+  out <- stringr::str_replace_all(out, intToUtf8(tmp_rep[4]), "\n")
 
   # add row-start and row-end strings
   out[table_rows] <- paste(row_start, out[table_rows], row_end, sep="")
