@@ -13,3 +13,6 @@ read_rtf("tests/testthat/table-gdoc-lb2.rtf")
 read_rtf("tests/testthat/table-libre-lb2.rtf")
 
 read_rtf("tests/testthat/table-cell-outside.rtf")
+
+read_rtf("tests/testthat/table-word-empty.rtf")
+read_rtf("tests/testthat/table-gdoc-empty.rtf")
