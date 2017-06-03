@@ -97,13 +97,12 @@ strip_rtf <- function(text, verbose = FALSE,
 
 
   tmp_rep <- unused_letters(c(text, row_start, row_end, cell_end),
-                            4, as_number=TRUE)
+                            2, as_number=TRUE)
+  tmp_rep_str <- intToUtf8(tmp_rep) %>% strsplit("") %>% unlist()
   keys   <- .specialchars$keys
   hexstr <- .specialchars$hexstr
-  hexstr[keys=="trowd"] <- sprintf("x%04d", tmp_rep[1])
-  hexstr[keys=="row"]   <- sprintf("x%04d", tmp_rep[2])
-  hexstr[keys=="cell"]  <- sprintf("x%04d", tmp_rep[3])
-  hexstr[keys=="par"]   <- sprintf("x%04d", tmp_rep[4])
+  hexstr[keys=="row"]   <- sprintf("x%04d", tmp_rep[1])
+  hexstr[keys=="cell"]  <- sprintf("x%04d", tmp_rep[2])
 
 
 
@@ -120,69 +119,60 @@ strip_rtf <- function(text, verbose = FALSE,
   #   lapply(as.hexmode) %>%
   #   lapply(intToUtf8)
   #print(out)
-  out <- lapply(parsed$intcode, intToUtf8)
+  out <- lapply(parsed$intcode, intToUtf8) %>% unlist()
 
   # code page translation
   if (!is.na(cpname)) {
     if (cpname %in% names(.cptable)) {
-      out[parsed$toconv] <- lapply(out[parsed$toconv], function(a) {
-        chartr(.cptable[[cpname]]$before, .cptable[[cpname]]$after, a)
-      })
+      out[parsed$toconv] <- chartr(.cptable[[cpname]]$before,
+                                   .cptable[[cpname]]$after,
+                                   out[parsed$toconv])
+      #out[parsed$toconv] <- lapply(out[parsed$toconv], function(a) {
+      #  chartr(.cptable[[cpname]]$before, .cptable[[cpname]]$after, a)
+      #})
     } else {
       warning("conversion table for ", cpname, " is missing")
     }
   }
 
-  # combine them all to a single long string
-  out <- unlist(out) %>% paste0(collapse = "")
-
-  # check if table keys exists
-  # if there is none, then split by line breaks and return
-  if (!grepl(sprintf('[%s]', intToUtf8(tmp_rep)), out)) return(strsplit(out, "\n") %>% unlist())
-
-  # ignore tables option --> all temporary letters are to be replaced by "" and return
-  if (ignore_tables) {
-    out <- gsub(sprintf('[%s]', intToUtf8(tmp_rep)), '', out)
-    return(strsplit(out, "\n") %>% unlist())
+  # if there is no table or ignore table option is specified,
+  # remove tmp_rep characters,
+  # split by line breaks,
+  # and return
+  if (!any(parsed$table) || ignore_tables) {
+    out <- out %>% paste0(collapse = "") %>%
+      strsplit("\n") %>%
+      unlist()
+    regx <- sprintf("[%s]", paste0(tmp_rep_str, collapse = ""))
+    out <- gsub(regx, "", out)
+    return(out)
   }
+  #print(out)
 
-  # identify tables
-  print(out)
-  r1a <- sprintf("[%s][^%s]+%s",
-                 intToUtf8(tmp_rep[1]),
-                 intToUtf8(tmp_rep[2]),
-                 intToUtf8(tmp_rep[2]))
-  r1b <- sprintf("[^%s]*%s[^%s]+%s",
-                 paste0(intToUtf8(tmp_rep[c(1,3:4)]), collapse=""),
-                 intToUtf8(tmp_rep[3]),
-                 paste0(intToUtf8(tmp_rep[1:2]), collapse=""),
-                 intToUtf8(tmp_rep[2]))
-  r2 <- sprintf("[^%s]+",
-                paste0(intToUtf8(tmp_rep[c(1,4)]), collapse=""))
-  regx <- sprintf("(%s)|(%s)|(%s)", r1a, r1b, r2)
-  tmp <- stringr::str_match_all(out, regx)[[1]]
-  #print(tmp)
 
-  out <- tmp[,1] # matched strings
-  # where are table rows?
-  table_rows <- !is.na(tmp[,2]) | !is.na(tmp[,3])
-  # row start and end indicators are not necessary any more
-  regx <- sprintf("[%s]+", paste0(intToUtf8(tmp_rep[1:2]), collapse=""))
-  out <- stringr::str_replace_all(out, regx, "")
+  # non-table sections are split by line breaks
+  # table sections are split by \row
+  out[!parsed$table] <- stringr::str_replace_all(out[!parsed$table], "\n",
+                                                 tmp_rep_str[1])
+  out <- strsplit(out, tmp_rep_str[1])
+  # unlist, with table flag kept tracked
+  len <- lapply(out, length) %>% unlist()
+  out <- unlist(out)
+  table_flg <- Map(rep, parsed$table, len) %>% unlist()
 
-  # convert cell end indicators and paragraph switcher
-  out <- stringr::str_replace_all(out, intToUtf8(tmp_rep[3]), cell_end)
-  out <- stringr::str_replace_all(out, intToUtf8(tmp_rep[4]), "\n")
 
-  # add row-start and row-end strings
-  out[table_rows] <- paste(row_start, out[table_rows], row_end, sep="")
+  # remove empty table sections
+  emp_tbl <- (nchar(out) == 0) & table_flg
+  out <- out[!emp_tbl]
+  table_flg <- table_flg[!emp_tbl]
 
-  # non-table elements are split by line breaks
-  out <- as.list(out)
-  out[!table_rows] <- lapply(out[!table_rows], strsplit, "\n")
+  # row start and end indicators added
+  out[table_flg] <- paste(row_start, out[table_flg], row_end, sep = "")
+  # cell separators are replaced
+  out <- stringr::str_replace_all(out, tmp_rep_str[2], cell_end)
 
-  # unlist will flatten the output
-  unlist(out)
+
+  out
 }
 
 

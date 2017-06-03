@@ -35,15 +35,18 @@ struct Section
 {
   std::string strcode;
   bool toconv;
+  bool intable;
   Section()
   {
     strcode = "";
     toconv = false;
+    intable = false;
   }
-  Section(std::string s, bool t)
+  Section(std::string s, bool t, bool i)
   {
     strcode = s;
     toconv = t;
+    intable = i;
   }
 };
 
@@ -72,7 +75,7 @@ void set_parameters(
 
 
 
-void append_out(std::vector<Section> &doc, std::string value, bool toconv)
+void append_out(std::vector<Section> &doc, std::string value, bool toconv, bool intable)
 {
   // debug
   // if (value == "xFEFF") {
@@ -83,19 +86,19 @@ void append_out(std::vector<Section> &doc, std::string value, bool toconv)
   // if vec size is zero, just append
   int N = doc.size();
   if (N == 0) {
-    doc.push_back(Section(value, toconv));
+    doc.push_back(Section(value, toconv, intable));
     return;
   }
 
   // if the last element in the toconv_vec is same as toconv,
   // append the value to the last element
-  if (doc.back().toconv == toconv) {
+  if (doc.back().toconv == toconv && doc.back().intable == intable) {
     doc.back().strcode += value;
     return;
   }
 
   // if the toconv is different from the last element, start a new section
-  doc.push_back(Section(value, toconv));
+  doc.push_back(Section(value, toconv, intable));
 
 }
 
@@ -125,13 +128,15 @@ List strip_helper(CharacterMatrix match_mat,
   //   characte vVector of same size, which match the
   //   special words to the hex string to replace
   //
-  // returns a list of two vectors of the same length
+  // returns a list of four vectors of the same length
   //   - strcode : character vector of hex codes, in the form
   //               e.g, x0010x3010...
   //   - intcode : list of integer vectors of unicodes,
   //               corresponding to strcode
-  //   - toconv  : logocal vector indicating
+  //   - toconv  : logical vector indicating
   //               whether the codes should be converted using the cp tables.
+  //   - table   : logical vector indicating
+  //               whether the section is within a table
   //
 
   // make sure that the special_keys and special_hex have the same size
@@ -168,6 +173,8 @@ List strip_helper(CharacterMatrix match_mat,
   bool ignorable = false;
   int ucskip = 1;
   int curskip = 0;
+  bool intable = false;
+  int celln = 0;
   std::string curhex = "";
 
   int N = match_mat.nrow();
@@ -207,7 +214,7 @@ List strip_helper(CharacterMatrix match_mat,
     if (curhex.size() > 0 && (hex == "" || curhex.size() == 4)) {
       // make sure the length is 4
       while (curhex.size() < 4) curhex = '0' + curhex;
-      append_out(doc, 'x' + curhex, true);
+      append_out(doc, 'x' + curhex, true, intable);
       curhex = "";
     }
 
@@ -224,13 +231,13 @@ List strip_helper(CharacterMatrix match_mat,
     } else if (cha != "") {
       curskip = 0;
       if (cha == "~") {
-        if (!ignorable) append_out(doc, "x00A0", false);
+        if (!ignorable) append_out(doc, "x00A0", false, intable);
       } else if (cha == "{") {
-        if (!ignorable) append_out(doc, "x007b", false);
+        if (!ignorable) append_out(doc, "x007b", false, intable);
       } else if (cha == "}") {
-        if (!ignorable) append_out(doc, "x007d", false);
+        if (!ignorable) append_out(doc, "x007d", false, intable);
       } else if (cha == "\\") {
-        if (!ignorable) append_out(doc, "x005c", false);
+        if (!ignorable) append_out(doc, "x005c", false, intable);
       } else if (cha == "*") {
         ignorable = true;
       }
@@ -242,8 +249,19 @@ List strip_helper(CharacterMatrix match_mat,
       } else if (ignorable) {
         continue;
       } else if (specialchars.haskey(word)) {
-        append_out(doc, specialchars.getvalue(word), false);
-      } else if (word == "uc") {
+        append_out(doc, specialchars.getvalue(word), false, intable);
+        if (word == "row") {
+          intable = false;
+          celln = 0;
+        } else if (word == "cell") {
+          if (celln > 0) celln--;
+        }
+      } else if (word == "intbl" || word == "trowd") {
+        intable = true;
+      } else if (word == "cellx") {
+        celln++;
+        if (celln > 0) intable = true;
+      }else if (word == "uc") {
         int n;
         std::istringstream(arg) >> n;
         ucskip = n;
@@ -251,7 +269,7 @@ List strip_helper(CharacterMatrix match_mat,
         int n;
         std::istringstream(arg) >> n;
         if (n < 0) n += 0x10000;
-        append_out(doc, 'x' + to_hexstr(n), false);
+        append_out(doc, 'x' + to_hexstr(n), false, intable);
         curskip = ucskip;
       }
     } else if (hex != "") {
@@ -267,7 +285,7 @@ List strip_helper(CharacterMatrix match_mat,
         for (std::string::iterator it = tchar.begin(); it != tchar.end(); ++it)
         {
           int n = *it;
-          append_out(doc, 'x' + to_hexstr(n), false);
+          append_out(doc, 'x' + to_hexstr(n), false, intable);
         }
       }
     }
@@ -277,17 +295,20 @@ List strip_helper(CharacterMatrix match_mat,
   // compile output
   CharacterVector str_vec;
   LogicalVector   toconv_vec;
+  LogicalVector   table_vec;
   List            int_vec_list;
   for (unsigned int i = 0; i < doc.size(); i++)
   {
     str_vec.push_back(doc[i].strcode);
     toconv_vec.push_back(doc[i].toconv);
+    table_vec.push_back(doc[i].intable);
 
     int_vec_list.push_back(hex_to_int(doc[i].strcode));
   }
   List out = List::create(Named("strcode") = str_vec,
                           Named("intcode") = int_vec_list,
-                          Named("toconv") = toconv_vec);
+                          Named("toconv") = toconv_vec,
+                          Named("table") = table_vec);
   return out;
 
 }
