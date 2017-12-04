@@ -17,3 +17,20 @@ for (url in urls)
 {
   download.file(url, file.path(savedir, basename(url)))
 }
+
+
+
+
+# download code page table for MAC
+urls <- paste("http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/MAC/",
+              c("CYRILLIC.TXT", "GREEK.TXT", "ICELAND.TXT",
+                "LATIN2.TXT", "ROMAN.TXT", "TURKISH.TXT"),
+              sep = "")
+
+savedir <- "data-raw"
+if (!dir.exists(savedir)) dir.create(savedir)
+
+for (url in urls)
+{
+  download.file(url, file.path(savedir, paste("mac-", basename(url), sep="")))
+}

@@ -1,3 +1,10 @@
+striprtf v0.5.0 (Release date: 2017-12-04)
+==============
+
+* Support RTF files in code pages for Mac
+
+
+
 striprtf v0.4.6 (Release date: 2017-12-04)
 ==============
 
@@ -11,11 +18,11 @@ striprtf v0.4.5 (Release date: 2017-07-04)
 * fixed bugs in table parser for files written by MS word
 
 
+
 striprtf v0.4.4 (Release date: 2017-05-15)
 ==============
 
 * fixed ambiguity in `pow` function in C++ code
-
 
 
 
@@ -60,6 +67,7 @@ striprtf v0.4.1 (Release date: 2017-05-14)
 
 
   For backward compatibility, there is an option `ignore_tables`; Set it `TRUE` to obtain the same behavior as the previous version.
+
 
 
 striprtf v0.3.2 (Release date: 2017-04-01)

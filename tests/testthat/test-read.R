@@ -61,6 +61,29 @@ test_that("Chinese and Korean", {
 })
 
 
+test_that("Special characters", {
+  x <- read_rtf("special-chars.rtf")
+  #ans <- readLines("special-chars.ans", encoding = "UTF-8")
+  expect_equal(grep("\u2022", x), 4L)
+  expect_equal(grep("\u2014", x), 5L)
+  expect_equal(grep("\u2013", x), 6L)
+  expect_equal(grep("\u2018", x), 7L)
+  expect_equal(grep("\u2019", x), 8L)
+  expect_equal(grep("\u201C", x), 9L)
+  expect_equal(grep("\u201D", x), 10L)
+})
+
+
+test_that("Office for Mac", {
+  x <- read_rtf("mac.rtf")
+  #ans <- readLines("special-chars.ans", encoding = "UTF-8")
+  expect_equal(grep("^This file"                           , x), 1L)
+  expect_equal(grep("^\u3053\u306e\u30d5\u30a1\u30a4\u30eb", x), 3L)
+  expect_equal(grep("^\u6b64\u6587\u4ef6\u662f\u7531"      , x), 5L)
+  expect_equal(grep("^\uc774\u20\ud30c\uc77c\uc740"        , x), 7L)
+})
+
+
 test_that("Europe", {
   x <- read_rtf("europe.rtf")
   ans <- readLines("europe.ans", encoding = "UTF-8")
