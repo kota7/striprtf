@@ -214,6 +214,7 @@ List strip_helper(CharacterMatrix match_mat,
     if (curhex.size() > 0 && (hex == "" || curhex.size() == 4)) {
       // make sure the length is 4
       while (curhex.size() < 4) curhex = '0' + curhex;
+      //Rcout << curhex << "\n";
       append_out(doc, 'x' + curhex, true, intable);
       curhex = "";
     }
@@ -249,6 +250,7 @@ List strip_helper(CharacterMatrix match_mat,
       } else if (ignorable) {
         continue;
       } else if (specialchars.haskey(word)) {
+        //Rcout << specialchars.getvalue(word) << "\n";
         append_out(doc, specialchars.getvalue(word), false, intable);
         if (word == "row") {
           intable = false;

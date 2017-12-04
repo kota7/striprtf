@@ -40,6 +40,9 @@ IntegerVector hex_to_int(std::string h, char sep)
   //
   // returns:
   //   integer vector
+  //
+  // error if:
+  //   h contains a letter other than 0-9, a-f, A-F, and sep
 
   h += sep; // make sure the last hex is read
 
