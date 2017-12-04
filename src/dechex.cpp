@@ -40,21 +40,23 @@ IntegerVector hex_to_int(std::string h, char sep)
   //
   // returns:
   //   integer vector
+  //
+  // error if:
+  //   h contains a letter other than 0-9, a-f, A-F, and sep
 
   h += sep; // make sure the last hex is read
 
   IntegerVector out;
   bool started = false;
+  int start = 0;
   for (int i = 0; i < h.size(); i++)
   {
-    int start;
     if (h[i] == sep) {
       if (!started) {
         start = i + 1;
         started = true;
       } else {
         int end = i;
-
         int tmp = 0;
         int base = 1;
         for (int k = end-1; k >= start; k--)
@@ -64,8 +66,12 @@ IntegerVector hex_to_int(std::string h, char sep)
           if (c >= '0' && c <= '9')      n = c - '0';
           else if (c >= 'A' && c <= 'F') n = c - 'A' + 10;
           else if (c >= 'a' && c <= 'f') n = c - 'a' + 10;
-          else stop("invalid hex");
-
+          else {
+            std::string mess = "invalid hex found: ";
+            mess += c;
+            mess += ", around: " + h.substr(start, 10);
+            stop(mess);
+          }
           tmp += base*n;
           base *= 16;
         }

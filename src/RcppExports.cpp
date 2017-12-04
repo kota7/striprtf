@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // to_hexstr
 std::string to_hexstr(int x, int pad);
-RcppExport SEXP striprtf_to_hexstr(SEXP xSEXP, SEXP padSEXP) {
+RcppExport SEXP _striprtf_to_hexstr(SEXP xSEXP, SEXP padSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // hex_to_int
 IntegerVector hex_to_int(std::string h, char sep);
-RcppExport SEXP striprtf_hex_to_int(SEXP hSEXP, SEXP sepSEXP) {
+RcppExport SEXP _striprtf_hex_to_int(SEXP hSEXP, SEXP sepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,7 +31,7 @@ END_RCPP
 }
 // strip_helper
 List strip_helper(CharacterMatrix match_mat, CharacterVector dest_names, CharacterVector special_keys, CharacterVector special_hex, bool verbose);
-RcppExport SEXP striprtf_strip_helper(SEXP match_matSEXP, SEXP dest_namesSEXP, SEXP special_keysSEXP, SEXP special_hexSEXP, SEXP verboseSEXP) {
+RcppExport SEXP _striprtf_strip_helper(SEXP match_matSEXP, SEXP dest_namesSEXP, SEXP special_keysSEXP, SEXP special_hexSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -43,4 +43,16 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(strip_helper(match_mat, dest_names, special_keys, special_hex, verbose));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_striprtf_to_hexstr", (DL_FUNC) &_striprtf_to_hexstr, 2},
+    {"_striprtf_hex_to_int", (DL_FUNC) &_striprtf_hex_to_int, 2},
+    {"_striprtf_strip_helper", (DL_FUNC) &_striprtf_strip_helper, 5},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_striprtf(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

@@ -2,14 +2,14 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 to_hexstr <- function(x, pad = 4L) {
-    .Call('striprtf_to_hexstr', PACKAGE = 'striprtf', x, pad)
+    .Call('_striprtf_to_hexstr', PACKAGE = 'striprtf', x, pad)
 }
 
 hex_to_int <- function(h, sep = 'x') {
-    .Call('striprtf_hex_to_int', PACKAGE = 'striprtf', h, sep)
+    .Call('_striprtf_hex_to_int', PACKAGE = 'striprtf', h, sep)
 }
 
 strip_helper <- function(match_mat, dest_names, special_keys, special_hex, verbose) {
-    .Call('striprtf_strip_helper', PACKAGE = 'striprtf', match_mat, dest_names, special_keys, special_hex, verbose)
+    .Call('_striprtf_strip_helper', PACKAGE = 'striprtf', match_mat, dest_names, special_keys, special_hex, verbose)
 }
 
