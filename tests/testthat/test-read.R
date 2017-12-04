@@ -61,6 +61,19 @@ test_that("Chinese and Korean", {
 })
 
 
+test_that("Special characters", {
+  x <- read_rtf("special-chars.rtf")
+  #ans <- readLines("special-chars.ans", encoding = "UTF-8")
+  expect_equal(grep("\u2022", x), 4L)
+  expect_equal(grep("\u2014", x), 5L)
+  expect_equal(grep("\u2013", x), 6L)
+  expect_equal(grep("\u2018", x), 7L)
+  expect_equal(grep("\u2019", x), 8L)
+  expect_equal(grep("\u201C", x), 9L)
+  expect_equal(grep("\u201D", x), 10L)
+})
+
+
 test_that("Europe", {
   x <- read_rtf("europe.rtf")
   ans <- readLines("europe.ans", encoding = "UTF-8")
