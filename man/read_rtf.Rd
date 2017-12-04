@@ -52,8 +52,8 @@ accomodates with various ANSI code pages.  For example, RTF files created
 by Japanese version of Microsoft Word marks \code{\\ansicpg932}, which indicates
 the code page 932 is used for letter-code conversion.
 The function detects the code page indication and
-convert them to UTF-8 as possible.  Conversion table is retrieved from
-here: (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}).
+convert the characters to UTF-8 where possible.  Conversion tables are retrieved from
+here: (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}).
 }
 \examples{
 read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
@@ -62,6 +62,6 @@ read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
 \itemize{
  \item{Python 3 implementation by Gilson Filho: \url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}}
  \item{Original discussion thread: \url{http://stackoverflow.com/a/188877}}
- \item{Code page table: \url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/}}
+ \item{Code page table: \url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}}
 }
 }
