@@ -1,3 +1,10 @@
+striprtf v0.4.6 (Release date: 2017-12-04)
+==============
+
+* fixed bugs for parsing lower quote (`\u2018`)
+
+
+
 striprtf v0.4.5 (Release date: 2017-07-04)
 ==============
 
