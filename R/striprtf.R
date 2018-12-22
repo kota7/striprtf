@@ -8,6 +8,8 @@
 #' @param row_start,row_end strings to be added at the beginning and end of table rows
 #' @param cell_end string to be put at the end of table cells
 #' @param ignore_tables if \code{TRUE}, no special treatment for tables
+#' @param check_file if \code{TRUE}, conducts a quick check on the file if it is an RTF file.
+#' If the file fails to pass the check, returns NULL without parsing the file.
 #' @param ... Addional arguments passed to \code{\link{readLines}}
 #' @return Character vector of extracted text
 #' @export
@@ -40,10 +42,16 @@
 #'
 read_rtf <- function(file, verbose = FALSE,
                      row_start = "*| ", row_end = "", cell_end = " | ", ignore_tables=FALSE,
+                     check_file=TRUE,
                      ...)
 {
   stopifnot(is.character(file))
   stopifnot(length(file) == 1L)
+
+  if (check_file && !looks_rtf(file)) {
+    message(sprintf("File '%s' does not seem to be an RTF file.", file))
+    return(NULL)
+  }
 
   readLines(file, warn = FALSE, ...) %>%
     paste0(collapse = "\n") %>%
