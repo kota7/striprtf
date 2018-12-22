@@ -6,7 +6,7 @@
 \title{Extract Text from RTF (Rich Text Format) File}
 \usage{
 read_rtf(file, verbose = FALSE, row_start = "*| ", row_end = "",
-  cell_end = " | ", ignore_tables = FALSE, ...)
+  cell_end = " | ", ignore_tables = FALSE, check_file = TRUE, ...)
 
 strip_rtf(text, verbose = FALSE, row_start = "*| ", row_end = "",
   cell_end = " | ", ignore_tables = FALSE)
@@ -23,6 +23,9 @@ this option itself makes the process slow.}
 \item{cell_end}{string to be put at the end of table cells}
 
 \item{ignore_tables}{if \code{TRUE}, no special treatment for tables}
+
+\item{check_file}{if \code{TRUE}, conducts a quick check on the file if it is an RTF file.
+If the file fails to pass the check, returns NULL without parsing the file.}
 
 \item{...}{Addional arguments passed to \code{\link{readLines}}}
 
