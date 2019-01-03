@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{looks_rtf}
 \alias{looks_rtf}
-\title{Quick test whether a file is RTF}
+\title{Test if a file looks like an RTF}
 \usage{
 looks_rtf(con, n = 1000)
 }
@@ -16,5 +16,8 @@ If smaller than 10, forced to 10.}
 Logical.
 }
 \description{
-Conducts a quick test whether a file looks RTF.
+Validate if a file looks like an RTF.
+The test should be seen as a minimal requirement;
+If failed, the file is highly likely that the file is invalid,
+while passed, there is still possibility that the file does not follw the rule of RTF files.
 }
