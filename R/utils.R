@@ -7,9 +7,12 @@ NULL
 NULL
 
 
-#' Quick test whether a file is RTF
+#' Test if a file looks like an RTF
 #'
-#' Conducts a quick test whether a file looks RTF.
+#' Validate if a file looks like an RTF.
+#' The test should be seen as a minimal requirement;
+#' If failed, the file is highly likely that the file is invalid,
+#' while passed, there is still possibility that the file does not follw the rule of RTF files.
 #'
 #' @param con A connection object or string of file name
 #' @param n Integer that specifies the length of contents to be tested.

@@ -2,7 +2,7 @@ striprtf v0.5.2 (Under development as of: 2018-12-22)
 ==============
 
 * Add `looks_rtf` function, which checks if a file is an RTF
-* Add `check_file` option to `read_rtf` function, indicating if input files should be validated before being parsed.
+* Add `check_file` option to `read_rtf` function, which allows users if input files should be validated before being parsed.
 
 
 striprtf v0.5.1 (Release date: 2017-12-05)
