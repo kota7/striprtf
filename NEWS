@@ -1,4 +1,4 @@
-striprtf v0.5.2 (Under development as of: 2018-12-22)
+striprtf v0.5.2 (Release date: 2019-01-03)
 ==============
 
 * Add `looks_rtf` function, which checks if a file is an RTF
