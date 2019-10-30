@@ -1,7 +1,7 @@
 Package: striprtf
 Type: Package
 Title: Extract Text from RTF File
-Version: 0.5.2
+Version: 0.5.3
 Authors@R: c(
     person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
   )
@@ -17,7 +17,7 @@ Imports:
     utils
 Suggests:
     testthat
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 LinkingTo: Rcpp
 URL: https://github.com/kota7/striprtf
 BugReports: https://github.com/kota7/striprtf/issues
