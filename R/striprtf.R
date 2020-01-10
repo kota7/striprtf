@@ -129,6 +129,9 @@ strip_rtf <- function(text, verbose = FALSE,
   #print(out)
   out <- lapply(parsed$intcode, intToUtf8) %>% unlist()
 
+  # Sometimes intcodes produce "NA" - Let them be empty instead
+  out[is.na(out)] <- ""
+
   # code page translation
   if (!is.na(cpname)) {
     if (cpname %in% names(.cptable)) {
