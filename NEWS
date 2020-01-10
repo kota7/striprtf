@@ -1,3 +1,10 @@
+striprtf v0.5.3.9001
+==============
+
+* `strip_rtf` now replaces `NA` outputs of `intToUtf8` with `""`, to handle edge cases where these `NA`s propagated to
+  logical vectors used for subsetting / subscripted assignment, causing conversions to crash.
+  [#15](https://github.com/kota7/striprtf/issues/15) (_mstr3336_)
+
 striprtf v0.5.2 (Release date: 2019-01-03)
 ==============
 
