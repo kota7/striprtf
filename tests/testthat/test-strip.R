@@ -70,3 +70,23 @@ test_that("Europe", {
   #expect_true(all(len == 1L))                # inclusion check
   #expect_true(all(diff(unlist(check)) > 0))  # order check
 })
+
+
+test_that("Brace mismatch 1", {
+  x <- readLines("brace_mismatch_1.rtf", warn = FALSE) %>% strip_rtf()
+  ans <- readLines("brace_mismatch_1.ans", encoding = "UTF-8")
+  check <- lapply(ans, function(a) which(x == a))
+  len <- lapply(check, length) %>% unlist()
+  expect_true(all(len == 1L))                # inclusion check
+  expect_true(all(diff(unlist(check)) > 0))  # order check
+})
+
+
+test_that("Brace mismatch 2", {
+  x <- readLines("brace_mismatch_2.rtf", warn = FALSE) %>% strip_rtf()
+  ans <- readLines("brace_mismatch_2.ans", encoding = "UTF-8")
+  check <- lapply(ans, function(a) which(x == a))
+  len <- lapply(check, length) %>% unlist()
+  expect_true(all(len == 1L))                # inclusion check
+  expect_true(all(diff(unlist(check)) > 0))  # order check
+})

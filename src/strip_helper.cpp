@@ -225,9 +225,16 @@ List strip_helper(CharacterMatrix match_mat,
       if (brace == "{") {
         state_stack.push(State(ucskip, ignorable));
       } else if (brace == "}") {
-        ucskip = state_stack.top().ucskip;
-        ignorable = state_stack.top().ignorable;
-        state_stack.pop();
+        if (state_stack.size() > 0) {
+          ucskip = state_stack.top().ucskip;
+          ignorable = state_stack.top().ignorable;
+          state_stack.pop();
+        } else {
+          // we have no state left in stack
+          // show warning message and do nothing
+          Rcout << "NOTE: The RTF file perhaps contains mismatched curly braces. "
+                << "The mismatched closing braces '}' will be ignored\n";
+        }
       }
     } else if (cha != "") {
       curskip = 0;
