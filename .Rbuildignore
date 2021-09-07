@@ -9,3 +9,5 @@ data-raw
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^\.github$
+^\.circleci$
+^\.circleci/config\.yml$
