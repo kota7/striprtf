@@ -8,3 +8,4 @@ data-raw
 ^README-.*\.png$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^\.github$
