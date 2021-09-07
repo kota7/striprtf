@@ -16,9 +16,9 @@
 #' @examples read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
 #' @references
 #' \itemize{
-#'  \item{Python 3 implementation by Gilson Filho: \url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}}
-#'  \item{Original discussion thread: \url{http://stackoverflow.com/a/188877}}
-#'  \item{Code page table: \url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}}
+#  \item{Python 3 implementation by Gilson Filho: \url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}}
+#'  \item{Original discussion thread: \url{https://stackoverflow.com/a/188877}}
+#'  \item{Code page table: \url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT}}
 #' }
 #' @details Rich text format (RTF) files are written as a text file
 #' consisting of ASCII characters.  The specification has been developed by
@@ -26,11 +26,9 @@
 #' This function interprets the character strings and extracts plain texts of
 #' the file.
 #' Major part of the algorithm of this function comes from a
-#' stack overflow thread (\url{http://stackoverflow.com/a/188877}) and
-#' the implemented by Gilson Filho for python 3
-#' (\url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}).
-#' The function is a translation of the above codes to R language,
-#' associated with C++ codes for enhancement.
+#' stack overflow thread (\url{https://stackoverflow.com/a/188877}) and
+#' the references therein.
+#' This function is a translation of the above to R language, associated with C++ codes for enhancement.
 #'
 #' An advance from the preceding implementation is that the function
 #' accomodates with various ANSI code pages.  For example, RTF files created
@@ -38,7 +36,7 @@
 #' the code page 932 is used for letter-code conversion.
 #' The function detects the code page indication and
 #' convert the characters to UTF-8 where possible.  Conversion tables are retrieved from
-#' here: (\url{http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}).
+#' here: (\url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT}).
 #'
 read_rtf <- function(file, verbose = FALSE,
                      row_start = "*| ", row_end = "", cell_end = " | ", ignore_tables=FALSE,

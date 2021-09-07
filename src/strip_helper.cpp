@@ -208,8 +208,9 @@ List strip_helper(CharacterMatrix match_mat,
     std::string brace = as<std::string>(match_mat(i,5));
     std::string tchar = as<std::string>(match_mat(i,6));
 
-    // Rcout << i << ": " << word << " " << arg << " " << hex << " " << cha << " " <<
-    //   brace << " " << tchar << "\n";
+
+    //Rcout << i+1 << "/" << N << ": " << word << " " << arg << " " <<
+    //   hex << " " << cha << " " << brace << " " << tchar << "\n";
 
     if (curhex.size() > 0 && (hex == "" || curhex.size() == 4)) {
       // make sure the length is 4
@@ -225,6 +226,7 @@ List strip_helper(CharacterMatrix match_mat,
       if (brace == "{") {
         state_stack.push(State(ucskip, ignorable));
       } else if (brace == "}") {
+        //Rcout << state_stack.size() << "\n";
         if (state_stack.size() > 0) {
           ucskip = state_stack.top().ucskip;
           ignorable = state_stack.top().ignorable;
@@ -232,7 +234,7 @@ List strip_helper(CharacterMatrix match_mat,
         } else {
           // we have no state left in stack
           // show warning message and do nothing
-          Rcout << "NOTE: The RTF file perhaps contains mismatched curly braces. "
+          Rcerr << "NOTE: The RTF file perhaps contains mismatched curly braces. "
                 << "The mismatched closing braces '}' will be ignored\n";
         }
       }

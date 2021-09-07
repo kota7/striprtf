@@ -51,6 +51,7 @@ IntegerVector hex_to_int(std::string h, char sep)
   int start = 0;
   for (int i = 0; i < h.size(); i++)
   {
+    //Rcout << i+1 << "/" << h.size() << ":" << h[i] << "\n";
     if (h[i] == sep) {
       if (!started) {
         start = i + 1;
