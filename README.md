@@ -126,8 +126,4 @@ Note:
 
   - [Stack overflow thread](http://stackoverflow.com/a/188877) where the
     algorithm has been discussed.
-  - [Gilson Filho’s implementation for
-    python 3](https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676)
   - [RTF specification 1.5](http://www.biblioscape.com/rtf15_spec.htm)
-  - [RTF specification
-    latest](https://www.microsoft.com/en-us/download/details.aspx?id=10725)
