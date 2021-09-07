@@ -68,7 +68,7 @@ by Japanese version of Microsoft Word marks \code{\\ansicpg932}, which indicates
 the code page 932 is used for letter-code conversion.
 The function detects the code page indication and
 convert the characters to UTF-8 where possible.  Conversion tables are retrieved from
-here: (\url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT}).
+here: (\url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}).
 }
 \examples{
 read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
@@ -76,6 +76,6 @@ read_rtf(system.file("extdata/king.rtf", package = "striprtf"))
 \references{
 \itemize{
  \item{Original discussion thread: \url{https://stackoverflow.com/a/188877}}
- \item{Code page table: \url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT}}
+ \item{Code page table: \url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}}
 }
 }

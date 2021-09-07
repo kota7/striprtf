@@ -18,7 +18,7 @@
 #' \itemize{
 #  \item{Python 3 implementation by Gilson Filho: \url{https://gist.github.com/gilsondev/7c1d2d753ddb522e7bc22511cfb08676}}
 #'  \item{Original discussion thread: \url{https://stackoverflow.com/a/188877}}
-#'  \item{Code page table: \url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT}}
+#'  \item{Code page table: \url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}}
 #' }
 #' @details Rich text format (RTF) files are written as a text file
 #' consisting of ASCII characters.  The specification has been developed by
@@ -36,7 +36,7 @@
 #' the code page 932 is used for letter-code conversion.
 #' The function detects the code page indication and
 #' convert the characters to UTF-8 where possible.  Conversion tables are retrieved from
-#' here: (\url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT}).
+#' here: (\url{https://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/}).
 #'
 read_rtf <- function(file, verbose = FALSE,
                      row_start = "*| ", row_end = "", cell_end = " | ", ignore_tables=FALSE,
