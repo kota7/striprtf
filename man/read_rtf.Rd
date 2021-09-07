@@ -5,11 +5,25 @@
 \alias{strip_rtf}
 \title{Extract Text from RTF (Rich Text Format) File}
 \usage{
-read_rtf(file, verbose = FALSE, row_start = "*| ", row_end = "",
-  cell_end = " | ", ignore_tables = FALSE, check_file = TRUE, ...)
+read_rtf(
+  file,
+  verbose = FALSE,
+  row_start = "*| ",
+  row_end = "",
+  cell_end = " | ",
+  ignore_tables = FALSE,
+  check_file = TRUE,
+  ...
+)
 
-strip_rtf(text, verbose = FALSE, row_start = "*| ", row_end = "",
-  cell_end = " | ", ignore_tables = FALSE)
+strip_rtf(
+  text,
+  verbose = FALSE,
+  row_start = "*| ",
+  row_end = "",
+  cell_end = " | ",
+  ignore_tables = FALSE
+)
 }
 \arguments{
 \item{file}{Path to an RTF file. Must be character of length 1.}

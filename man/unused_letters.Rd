@@ -4,8 +4,13 @@
 \alias{unused_letters}
 \title{Find letters not used in strings}
 \usage{
-unused_letters(s, n = 1, avoid_strifrtf_internal = TRUE,
-  as_number = FALSE, as_vector = FALSE)
+unused_letters(
+  s,
+  n = 1,
+  avoid_strifrtf_internal = TRUE,
+  as_number = FALSE,
+  as_vector = FALSE
+)
 }
 \arguments{
 \item{s}{character vector}
