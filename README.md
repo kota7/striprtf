@@ -1,12 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<https://www.r-pkg.org/badges/version/striprtf> [![Build
+[![Build
 Status](https://travis-ci.org/kota7/striprtf.svg?branch=master)](https://travis-ci.org/kota7/striprtf)
-[![R-CMD-check](https://github.com/kota7/striprtf/workflows/R-CMD-check/badge.svg)](https://github.com/kota7/striprtf/actions)
+[![CRAN Status](https://www.r-pkg.org/badges/version/striprtf)](https://www.r-pkg.org/badges/version/striprtf)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/kota7/striprtf?branch=master&svg=true)](https://ci.appveyor.com/project/kota7/striprtf)
 [![](http://cranlogs.r-pkg.org/badges/striprtf)](https://cran.r-project.org/package=striprtf)
+[![R-CMD-check](https://github.com/kota7/striprtf/workflows/R-CMD-check/badge.svg)](https://github.com/kota7/striprtf/actions)
 
 # striprtf: Extract Text from RTF (Rich Text Format) File
 
