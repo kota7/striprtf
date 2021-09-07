@@ -88,8 +88,8 @@ Note:
 
 ## References
 
-- [Stack overflow thread](http://stackoverflow.com/a/188877) where the algorithm has been discussed.
-- [RTF specification 1.5](http://www.biblioscape.com/rtf15_spec.htm)
+- [Stack overflow thread](https://stackoverflow.com/a/188877) where the algorithm has been discussed.
+- [RTF specification 1.5](https://www.biblioscape.com/rtf15_spec.htm)
 
 
 
