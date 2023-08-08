@@ -113,3 +113,10 @@ test_that("Brace mismatch 2", {
   expect_true(all(len == 1L))                # inclusion check
   expect_true(all(diff(unlist(check)) > 0))  # order check
 })
+
+
+test_that("chinese", {
+  x <- read_rtf("chinese-sas.rtf")
+  check <- "SAS \u7cfb\u7edf" %in% x
+  expect_true(check)
+})
