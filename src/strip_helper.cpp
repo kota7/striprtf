@@ -318,25 +318,35 @@ List strip_helper(CharacterMatrix match_mat,
   if (verbose) Rcout << "\n";
 
   // compile output
-  CharacterVector str_vec;
-  LogicalVector   toconv_vec;
+  //CharacterVector str_vec;
+  //LogicalVector   toconv_vec;
   LogicalVector   table_vec;
   List            int_vec_list;
+
+  IntegerVector int_vec;  // current chunk
   for (unsigned int i = 0; i < doc.size(); i++)
   {
-    str_vec.push_back(doc[i].strcode);
-    toconv_vec.push_back(doc[i].toconv);
-    table_vec.push_back(doc[i].intable);
+    //str_vec.push_back(doc[i].strcode);
+    //toconv_vec.push_back(doc[i].toconv);
+    //table_vec.push_back(doc[i].intable);
 
+    // append the integer codes to the chunk
+    // apply the code page conversion along the way, if needed
     IntegerVector tmp = hex_to_int(doc[i].strcode);
-    for (int i=0; i<tmp.size(); i++)
-      if (codemap.haskey(tmp[i])) tmp[i] = codemap.getvalue(tmp[i]);
+    for (int j=0; j<tmp.size(); j++)
+      int_vec.push_back(doc[i].toconv && codemap.haskey(tmp[j]) ? codemap.getvalue(tmp[j]) : tmp[j]);
 
-    int_vec_list.push_back(tmp);
+    // we push the current chunk for two cases:
+    // - intable status will change next
+    // - we reached the last element
+    if (i == doc.size() - 1 || doc[i].intable != doc[i+1].intable) {
+      table_vec.push_back(doc[i].intable);
+      int_vec_list.push_back(int_vec);
+      int_vec.erase(int_vec.begin(), int_vec.end());  // make empty
+    }
   }
-  List out = List::create(Named("strcode") = str_vec,
-                          Named("intcode") = int_vec_list,
-                          Named("toconv") = toconv_vec,
+
+  List out = List::create(Named("intcode") = int_vec_list,
                           Named("table") = table_vec);
   return out;
 
