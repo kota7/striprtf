@@ -1,7 +1,7 @@
 Package: striprtf
 Type: Package
 Title: Extract Text from RTF File
-Version: 0.5.4
+Version: 0.6.0
 Authors@R: c(
     person("Kota", "Mori", email = "kmori05@gmail.com", role = c("aut", "cre"))
   )
