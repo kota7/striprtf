@@ -141,15 +141,12 @@ List strip_helper(CharacterMatrix match_mat,
   //   Codes appearing in the texts are mapped from "before" to "after" values
   //   before returning
   //
-  // returns a list of four vectors of the same length
-  //   - strcode : character vector of hex codes, in the form
-  //               e.g, x0010x3010...
+  // returns a list of two vectors of the same length
   //   - intcode : list of integer vectors of unicodes,
-  //               corresponding to strcode
-  //   - toconv  : logical vector indicating
-  //               whether the codes should be converted using the cp tables.
   //   - table   : logical vector indicating
   //               whether the section is within a table
+  //               we make sure that adjacent table parts and non-table parts are concatenated
+  //               as a result, table won't be split in the middle
   //
 
   // make sure that the special_keys and special_hex have the same size
