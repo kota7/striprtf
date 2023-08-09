@@ -3,5 +3,7 @@
 .RData
 .Ruserdata
 
+*.swp
 
 ~*
+.~lock*

@@ -87,8 +87,12 @@ strip_rtf <- function(text, verbose = FALSE,
   cp <- stringr::str_match(text, "\\\\ansicpg([0-9]+)")[,2]
   if (is.na(cp)) {
     cpname <- NA_character_
+    code_before <- integer(0)
+    code_after <- integer(0)
   } else {
     cpname <- paste("CP", cp, sep = "")
+    code_before <- .cptable[[cpname]]$before
+    code_after <- .cptable[[cpname]]$after
   }
 
   pattern <- stringr::regex(
@@ -117,6 +121,8 @@ strip_rtf <- function(text, verbose = FALSE,
                          dest_names = .destinations,
                          special_keys = keys,
                          special_hex  = hexstr,
+                         code_before = code_before,
+                         code_after = code_after,
                          verbose = verbose)
   #print(parsed)
 
@@ -127,19 +133,19 @@ strip_rtf <- function(text, verbose = FALSE,
   #print(out)
   out <- lapply(parsed$intcode, intToUtf8) %>% unlist()
 
-  # code page translation
-  if (!is.na(cpname)) {
-    if (cpname %in% names(.cptable)) {
-      out[parsed$toconv] <- chartr(.cptable[[cpname]]$before,
-                                   .cptable[[cpname]]$after,
-                                   out[parsed$toconv])
-      #out[parsed$toconv] <- lapply(out[parsed$toconv], function(a) {
-      #  chartr(.cptable[[cpname]]$before, .cptable[[cpname]]$after, a)
-      #})
-    } else {
-      warning("conversion table for ", cpname, " is missing")
-    }
-  }
+  # code page translation ... will be done in the strip_helper function
+  # if (!is.na(cpname)) {
+  #   if (cpname %in% names(.cptable)) {
+  #     out[parsed$toconv] <- chartr(.cptable[[cpname]]$before,
+  #                                  .cptable[[cpname]]$after,
+  #                                  out[parsed$toconv])
+  #     #out[parsed$toconv] <- lapply(out[parsed$toconv], function(a) {
+  #     #  chartr(.cptable[[cpname]]$before, .cptable[[cpname]]$after, a)
+  #     #})
+  #   } else {
+  #     warning("conversion table for ", cpname, " is missing")
+  #   }
+  # }
 
   # if there is no table or ignore table option is specified,
   # remove tmp_rep characters,

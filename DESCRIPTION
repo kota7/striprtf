@@ -16,7 +16,8 @@ Imports:
     utils
 Suggests:
     testthat
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 LinkingTo: Rcpp
 URL: https://github.com/kota7/striprtf
 BugReports: https://github.com/kota7/striprtf/issues
+Encoding: UTF-8

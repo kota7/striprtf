@@ -117,6 +117,13 @@ test_that("Brace mismatch 2", {
 
 test_that("chinese", {
   x <- read_rtf("chinese-sas.rtf")
-  check <- "SAS \u7cfb\u7edf" %in% x
-  expect_true(check)
+
+  i1 <- grep("SAS", x, fixed=TRUE)
+  i2 <- grep("\u7cfb\u7edf", x, fixed=TRUE)
+
+  # each must appear exactly once
+  expect_equal(length(i1), 1)
+  expect_equal(length(i2), 1)
+  # and the second should appear not before the first
+  expect_true(i2 >= i1)
 })

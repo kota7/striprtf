@@ -12,15 +12,15 @@ using namespace Rcpp;
 // not usable for other occasions
 
 
-template <class T>
+template <class S, class T>
   struct SimpleOrderedDict
 {
-  std::vector<std::string> keys;
+  std::vector<S> keys;
   std::vector<T> values;
 
   SimpleOrderedDict()
   {
-    std::vector<std::string> keys(0);
+    std::vector<S> keys(0);
     std::vector<T> values(0);
   }
   unsigned int size()
@@ -28,14 +28,12 @@ template <class T>
     return keys.size();
   }
 
-  void insert(const std::pair<std::string, T> &p)
+  void insert(S key, T value)
   {
-    std::string key = p.first;
-    T v = p.second;
     // if empty, just add them
     if (size() == 0) {
       keys.push_back(key);
-      values.push_back(v);
+      values.push_back(value);
       return;
     }
     // make sure the key is ordered
@@ -44,10 +42,10 @@ template <class T>
     if (haskey(key)) stop(key + " already exists");
 
     keys.push_back(key);
-    values.push_back(v);
+    values.push_back(value);
   }
 
-  int locate(const std::string &key)
+  int locate(const S &key)
   {
     // returns the location of key
     // if not exists, returns negative integer
@@ -68,17 +66,17 @@ template <class T>
     return -1;
   }
 
-  bool haskey(const std::string &key)
+  bool haskey(const S &key)
   {
     // returns true if and only if the key exists
     return (locate(key) >= 0);
   }
 
-  T getvalue(const std::string & key)
+  T getvalue(const S & key)
   {
     int i = locate(key);
     if (i >= 0) return values[i];
-    return NULL;
+    Rcpp::stop("key does not exist");
   }
 };
 

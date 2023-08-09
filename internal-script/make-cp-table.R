@@ -72,20 +72,19 @@ for (file in file_list)
   # we only need the cases where codes are different
   x <- x[x$before != x$after,]
 
-  # create before and after strings for conversion
-  bef <- intToUtf8(x$before) %>% paste0(collapse = "")
-  aft <- intToUtf8(x$after) %>% paste0(collapse = "")
-  stopifnot(nchar(bef) == nchar(aft))
-  tmp <- list(before = bef, after = aft)
+  # create before and after integer values
+  #bef <- intToUtf8(x$before) %>% paste0(collapse = "")
+  #aft <- intToUtf8(x$after) %>% paste0(collapse = "")
+  #stopifnot(nchar(bef) == nchar(aft))
 
   #table_list <- c(table_list, table_name)
-  out <- c(out, list(tmp) %>% setNames(table_name))
+  out <- c(out, list(x) %>% setNames(table_name))
 }
 
 
 
 .cptable <- out
-devtools::use_data(.cptable, internal = TRUE, overwrite = TRUE)
+usethis::use_data(.cptable, internal = TRUE, overwrite = TRUE)
 
 
 #cat(paste0(table_list, collapse = ", "))
