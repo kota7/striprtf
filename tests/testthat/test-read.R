@@ -119,7 +119,7 @@ test_that("chinese", {
   x <- read_rtf("chinese-sas.rtf")
 
   i1 <- grep("SAS", x, fixed=TRUE)
-  i2 <- grep("\u7cfb\u7edf", x, fixed=TRUE)
+  i2 <- grep("系统", x, fixed=TRUE)
 
   # each must appear exactly once
   expect_equal(length(i1), 1)
