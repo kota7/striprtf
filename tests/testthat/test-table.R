@@ -89,3 +89,24 @@ test_that("table with Japanese letters", {
   expect_equal(i3-i2, 1)
 })
 
+
+test_that("table with chinese letters, SAS generated", {
+  x <- read_rtf("chinese-sas.rtf", row_start = "<tr>", row_end = "</tr>", cell_end = ",")
+
+  i1 <- grep("<tr>姓名,性别,年龄,身高（英寸）,体重（磅）,</tr>", x, fixed=TRUE)
+  i2 <- grep("<tr>阿尔弗雷德,男,14,69,112.5,</tr>", x, fixed=TRUE)
+  i3 <- grep("<tr>爱丽丝,女,13,56.5,84,</tr>", x, fixed=TRUE)
+
+  # each must appear exactly once
+  expect_equal(length(i1), 1)
+  expect_equal(length(i2), 1)
+  expect_equal(length(i3), 1)
+  # and they must be side by side
+  expect_equal(i2-i1, 1)
+  expect_equal(i3-i2, 1)
+
+  # there should be 20 rows
+  n <- length(grep("<tr>", x, fixed=TRUE))
+  expect_equal(n, 20)
+})
+

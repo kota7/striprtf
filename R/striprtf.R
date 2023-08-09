@@ -126,13 +126,9 @@ strip_rtf <- function(text, verbose = FALSE,
                          verbose = verbose)
   #print(parsed)
 
-  #print(parsed$intcode)
-  # out <- strsplit(parsed$strcode, "x") %>%
-  #   lapply(as.hexmode) %>%
-  #   lapply(intToUtf8)
-  #print(out)
+  # convert integer codes to utf8
   out <- lapply(parsed$intcode, intToUtf8) %>% unlist()
-
+  #print(out)
   # code page translation ... will be done in the strip_helper function
   # if (!is.na(cpname)) {
   #   if (cpname %in% names(.cptable)) {
@@ -161,27 +157,27 @@ strip_rtf <- function(text, verbose = FALSE,
   }
   #print(out)
 
-
   # non-table sections are split by line breaks
   # table sections are split by \row
-  out[!parsed$table] <- stringr::str_replace_all(out[!parsed$table], "\n",
-                                                 tmp_rep_str[1])
+  # so we replace line breaks
+  out[!parsed$table] <- stringr::str_replace_all(out[!parsed$table], "\n", tmp_rep_str[1])
   out <- strsplit(out, tmp_rep_str[1])
   # unlist, with table flag kept tracked
   len <- lapply(out, length) %>% unlist()
   out <- unlist(out)
   table_flg <- Map(rep, parsed$table, len) %>% unlist()
-
+  #print(out)
+  #print(table_flg)
 
   # remove empty table sections
   emp_tbl <- (nchar(out) == 0) & table_flg
   out <- out[!emp_tbl]
   table_flg <- table_flg[!emp_tbl]
 
+  # cell separators are replaced
+  out[table_flg] <- stringr::str_replace_all(out[table_flg], tmp_rep_str[2], cell_end)
   # row start and end indicators added
   out[table_flg] <- paste(row_start, out[table_flg], row_end, sep = "")
-  # cell separators are replaced
-  out <- stringr::str_replace_all(out, tmp_rep_str[2], cell_end)
 
 
   out
