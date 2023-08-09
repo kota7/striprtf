@@ -56,10 +56,13 @@ struct Section
 
 void set_parameters(
     std::set<std::string> &destinations,
-    SimpleOrderedDict<std::string> &specialchars,
+    SimpleOrderedDict<std::string, std::string> &specialchars,
+    SimpleOrderedDict<int, int> &codemap,
     CharacterVector dest_names,
     CharacterVector special_keys,
-    CharacterVector special_hex)
+    CharacterVector special_hex,
+    IntegerVector int_before,
+    IntegerVector int_after)
 {
   // destinations
   for (int i = 0; i < dest_names.size(); i++)
@@ -67,8 +70,11 @@ void set_parameters(
 
   // special chars
   for (int i = 0; i < special_keys.size(); i++)
-    specialchars.insert(std::pair<std::string, std::string>(
-        as<std::string>(special_keys[i]), as<std::string>(special_hex[i])));
+    specialchars.insert(as<std::string>(special_keys[i]), as<std::string>(special_hex[i]));
+
+  // special chars
+  for (int i = 0; i < int_before.size(); i++)
+    codemap.insert(int_before[i], int_after[i]);
 
 }
 
@@ -108,6 +114,8 @@ List strip_helper(CharacterMatrix match_mat,
                   CharacterVector dest_names,
                   CharacterVector special_keys,
                   CharacterVector special_hex,
+                  IntegerVector code_before,
+                  IntegerVector code_after,
                   bool verbose) {
   // helps rtf2text function by handling loop part
   //
@@ -128,6 +136,11 @@ List strip_helper(CharacterMatrix match_mat,
   //   characte vVector of same size, which match the
   //   special words to the hex string to replace
   //
+  // code_before, code_after:
+  //   Mapping of integer codes based on the code page specified
+  //   Codes appearing in the texts are mapped from "before" to "after" values
+  //   before returning
+  //
   // returns a list of four vectors of the same length
   //   - strcode : character vector of hex codes, in the form
   //               e.g, x0010x3010...
@@ -144,9 +157,10 @@ List strip_helper(CharacterMatrix match_mat,
     stop("special keys and values have different length");
 
   std::set<std::string> destinations;
-  SimpleOrderedDict<std::string> specialchars;
-  set_parameters(destinations, specialchars,
-                 dest_names, special_keys, special_hex);
+  SimpleOrderedDict<std::string, std::string> specialchars;
+  SimpleOrderedDict<int, int> codemap;
+  set_parameters(destinations, specialchars, codemap,
+                 dest_names, special_keys, special_hex, code_before, code_after);
 
 
   // debug
@@ -314,7 +328,11 @@ List strip_helper(CharacterMatrix match_mat,
     toconv_vec.push_back(doc[i].toconv);
     table_vec.push_back(doc[i].intable);
 
-    int_vec_list.push_back(hex_to_int(doc[i].strcode));
+    IntegerVector tmp = hex_to_int(doc[i].strcode);
+    for (int i=0; i<tmp.size(); i++)
+      if (codemap.haskey(tmp[i])) tmp[i] = codemap.getvalue(tmp[i]);
+
+    int_vec_list.push_back(tmp);
   }
   List out = List::create(Named("strcode") = str_vec,
                           Named("intcode") = int_vec_list,

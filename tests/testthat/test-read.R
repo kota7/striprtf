@@ -113,3 +113,17 @@ test_that("Brace mismatch 2", {
   expect_true(all(len == 1L))                # inclusion check
   expect_true(all(diff(unlist(check)) > 0))  # order check
 })
+
+
+test_that("chinese", {
+  x <- read_rtf("chinese-sas.rtf")
+
+  i1 <- grep("SAS", x, fixed=TRUE)
+  i2 <- grep("系统", x, fixed=TRUE)
+
+  # each must appear exactly once
+  expect_equal(length(i1), 1)
+  expect_equal(length(i2), 1)
+  # and the second should appear not before the first
+  expect_true(i2 >= i1)
+})

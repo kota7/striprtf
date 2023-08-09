@@ -29,7 +29,7 @@ test_that("table with special chars", {
   i1 <- grep("<tr>a\tb\tc,d\ne\nf,h,i,j,</tr>", x, fixed=TRUE)
   i2 <- grep("<tr>k l m ,\u201cfoo\u201d,\u2018bar\u2019,</tr>", x, fixed=TRUE)
 
-  # both must appear exatly once
+  # both must appear exactly once
   expect_equal(length(i1), 1)
   expect_equal(length(i2), 1)
   # and they must be side by side
@@ -70,5 +70,22 @@ test_that("big file with many tables", {
   x <- read_rtf("big-with-table.rtf", ignore_tables=TRUE)
   i <- grep("abcdefghij", x)
   expect_equal(length(i), 4)
+})
+
+
+test_that("table with Japanese letters", {
+  x <- read_rtf("table-libre-japanese.rtf", row_start = "<tr>", row_end = "</tr>", cell_end = ",")
+
+  i1 <- grep("<tr>姓,名,性別,</tr>", x, fixed=TRUE)
+  i2 <- grep("<tr>山田,太郎,Male (男),</tr>", x, fixed=TRUE)
+  i3 <- grep("<tr>佐々木,花子,Female (女),</tr>", x, fixed=TRUE)
+
+  # each must appear exactly once
+  expect_equal(length(i1), 1)
+  expect_equal(length(i2), 1)
+  expect_equal(length(i3), 1)
+  # and they must be side by side
+  expect_equal(i2-i1, 1)
+  expect_equal(i3-i2, 1)
 })
 

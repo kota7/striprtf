@@ -9,7 +9,7 @@ hex_to_int <- function(h, sep = 'x') {
     .Call('_striprtf_hex_to_int', PACKAGE = 'striprtf', h, sep)
 }
 
-strip_helper <- function(match_mat, dest_names, special_keys, special_hex, verbose) {
-    .Call('_striprtf_strip_helper', PACKAGE = 'striprtf', match_mat, dest_names, special_keys, special_hex, verbose)
+strip_helper <- function(match_mat, dest_names, special_keys, special_hex, code_before, code_after, verbose) {
+    .Call('_striprtf_strip_helper', PACKAGE = 'striprtf', match_mat, dest_names, special_keys, special_hex, code_before, code_after, verbose)
 }
 

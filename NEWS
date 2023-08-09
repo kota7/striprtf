@@ -1,4 +1,10 @@
-striprtf v0.5.3 (Dev version as of 2021-09-07)
+striprtf v0.6.0 (Dev version as of 2023-08-09)
+==============
+
+* Fix error on some code pages (e.g. CP936)
+
+
+striprtf v0.5.3 (Release date: 2021-09-07)
 ==============
 
 * `read_rtf`, `strip_rtf` now allow mismatched curly braces

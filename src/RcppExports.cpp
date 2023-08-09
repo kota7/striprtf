@@ -35,8 +35,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // strip_helper
-List strip_helper(CharacterMatrix match_mat, CharacterVector dest_names, CharacterVector special_keys, CharacterVector special_hex, bool verbose);
-RcppExport SEXP _striprtf_strip_helper(SEXP match_matSEXP, SEXP dest_namesSEXP, SEXP special_keysSEXP, SEXP special_hexSEXP, SEXP verboseSEXP) {
+List strip_helper(CharacterMatrix match_mat, CharacterVector dest_names, CharacterVector special_keys, CharacterVector special_hex, IntegerVector code_before, IntegerVector code_after, bool verbose);
+RcppExport SEXP _striprtf_strip_helper(SEXP match_matSEXP, SEXP dest_namesSEXP, SEXP special_keysSEXP, SEXP special_hexSEXP, SEXP code_beforeSEXP, SEXP code_afterSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,8 +44,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< CharacterVector >::type dest_names(dest_namesSEXP);
     Rcpp::traits::input_parameter< CharacterVector >::type special_keys(special_keysSEXP);
     Rcpp::traits::input_parameter< CharacterVector >::type special_hex(special_hexSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type code_before(code_beforeSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type code_after(code_afterSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(strip_helper(match_mat, dest_names, special_keys, special_hex, verbose));
+    rcpp_result_gen = Rcpp::wrap(strip_helper(match_mat, dest_names, special_keys, special_hex, code_before, code_after, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -53,7 +55,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_striprtf_to_hexstr", (DL_FUNC) &_striprtf_to_hexstr, 2},
     {"_striprtf_hex_to_int", (DL_FUNC) &_striprtf_hex_to_int, 2},
-    {"_striprtf_strip_helper", (DL_FUNC) &_striprtf_strip_helper, 5},
+    {"_striprtf_strip_helper", (DL_FUNC) &_striprtf_strip_helper, 7},
     {NULL, NULL, 0}
 };
 
