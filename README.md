@@ -7,6 +7,7 @@ status](https://www.r-pkg.org/badges/version/striprtf)](https://cran.r-project.o
 Status](https://ci.appveyor.com/api/projects/status/github/kota7/striprtf?branch=master&svg=true)](https://ci.appveyor.com/project/kota7/striprtf)
 [![](http://cranlogs.r-pkg.org/badges/striprtf)](https://cran.r-project.org/package=striprtf)
 [![R-CMD-check](https://github.com/kota7/striprtf/workflows/R-CMD-check/badge.svg)](https://github.com/kota7/striprtf/actions)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/kota7/striprtf)
 
 # striprtf: Extract Text from RTF (Rich Text Format) File
 
